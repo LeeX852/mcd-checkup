@@ -1,0 +1,1272 @@
+{
+  "order-list": {
+    "data": {
+      "list": [
+        {
+          "orderId": "SN0987863454311",
+          "orderType": "得来速",
+          "createTime": "2026-03-21 13:24:24",
+          "beType": "DT",
+          "beCode": "BE0828",
+          "storeCode": "S3296",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P8292",
+              "productName": "冰美式中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P6994",
+              "productName": "纯悦",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "69.93"
+        },
+        {
+          "orderId": "SN0194425666827",
+          "orderType": "外卖",
+          "createTime": "2026-09-15 12:30:23",
+          "beType": "MC_CAFE",
+          "beCode": "BE0442",
+          "storeCode": "S1055",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2446",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2368",
+              "productName": "热牛奶中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "36.36"
+        },
+        {
+          "orderId": "SN0718067632369",
+          "orderType": "外卖",
+          "createTime": "2026-02-16 11:10:44",
+          "beType": "STORE",
+          "beCode": "BE0925",
+          "storeCode": "S1352",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4752",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2982",
+              "productName": "纯悦",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "46.05"
+        },
+        {
+          "orderId": "SN0899286482986",
+          "orderType": "堂食",
+          "createTime": "2026-02-20 15:21:11",
+          "beType": "DT",
+          "beCode": "BE0989",
+          "storeCode": "S1563",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P7983",
+              "productName": "麦乐鸡5块",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2098",
+              "productName": "麦旋风奥利奥",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "68.73"
+        },
+        {
+          "orderId": "SN0972042428399",
+          "orderType": "外卖",
+          "createTime": "2026-05-06 23:21:49",
+          "beType": "MC_CAFE",
+          "beCode": "BE0286",
+          "storeCode": "S3056",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6939",
+              "productName": "纯悦",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P5204",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "45.00"
+        },
+        {
+          "orderId": "SN0659398779032",
+          "orderType": "堂食",
+          "createTime": "2026-06-09 16:27:42",
+          "beType": "MC_CAFE",
+          "beCode": "BE0604",
+          "storeCode": "S3219",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6876",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P3806",
+              "productName": "麦辣鸡翅-2块",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "28.56"
+        },
+        {
+          "orderId": "SN0594975392496",
+          "orderType": "到店取餐",
+          "createTime": "2026-08-16 13:09:06",
+          "beType": "DT",
+          "beCode": "BE0852",
+          "storeCode": "S3589",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P8824",
+              "productName": "麦辣鸡翅-2块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P6512",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9997",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "42.39"
+        },
+        {
+          "orderId": "SN0617412072306",
+          "orderType": "得来速",
+          "createTime": "2026-05-26 18:37:45",
+          "beType": "MC_CAFE",
+          "beCode": "BE0542",
+          "storeCode": "S4246",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P8414",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P4583",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P5124",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "56.28"
+        },
+        {
+          "orderId": "SN0145551651414",
+          "orderType": "得来速",
+          "createTime": "2026-06-29 18:52:08",
+          "beType": "STORE",
+          "beCode": "BE0260",
+          "storeCode": "S3087",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P1238",
+              "productName": "中薯条",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P3119",
+              "productName": "中薯条",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "95.68"
+        },
+        {
+          "orderId": "SN0116541834701",
+          "orderType": "堂食",
+          "createTime": "2026-08-01 12:27:25",
+          "beType": "STORE",
+          "beCode": "BE0214",
+          "storeCode": "S3230",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P9553",
+              "productName": "双层吉士汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9777",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "25.90"
+        },
+        {
+          "orderId": "SN0396514589038",
+          "orderType": "堂食",
+          "createTime": "2026-06-09 13:00:24",
+          "beType": "DT",
+          "beCode": "BE0817",
+          "storeCode": "S7064",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P9640",
+              "productName": "圆筒冰淇淋",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7809",
+              "productName": "麦旋风奥利奥",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "43.64"
+        },
+        {
+          "orderId": "SN0255623313159",
+          "orderType": "到店取餐",
+          "createTime": "2026-08-22 18:37:11",
+          "beType": "STORE",
+          "beCode": "BE0888",
+          "storeCode": "S6491",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P1144",
+              "productName": "麦辣鸡翅-2块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P5992",
+              "productName": "草莓麦旋风",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7724",
+              "productName": "双层吉士汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "35.52"
+        },
+        {
+          "orderId": "SN0981340551536",
+          "orderType": "得来速",
+          "createTime": "2026-09-16 13:39:21",
+          "beType": "DT",
+          "beCode": "BE0335",
+          "storeCode": "S6699",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2498",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "13.27"
+        },
+        {
+          "orderId": "SN0199269117230",
+          "orderType": "外卖",
+          "createTime": "2026-09-12 11:57:32",
+          "beType": "MC_CAFE",
+          "beCode": "BE0878",
+          "storeCode": "S4535",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5944",
+              "productName": "脆薯饼",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P5787",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "43.64"
+        },
+        {
+          "orderId": "SN0238127737509",
+          "orderType": "外卖",
+          "createTime": "2026-10-01 13:27:56",
+          "beType": "DT",
+          "beCode": "BE0125",
+          "storeCode": "S5989",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P1641",
+              "productName": "脆香油条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P3721",
+              "productName": "板烧鸡腿堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "24.48"
+        },
+        {
+          "orderId": "SN0176609271615",
+          "orderType": "外卖",
+          "createTime": "2026-05-29 20:25:20",
+          "beType": "MC_CAFE",
+          "beCode": "BE0526",
+          "storeCode": "S7438",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P8831",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P8321",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "37.48"
+        },
+        {
+          "orderId": "SN0793607872350",
+          "orderType": "堂食",
+          "createTime": "2026-03-17 18:19:55",
+          "beType": "STORE",
+          "beCode": "BE0477",
+          "storeCode": "S6788",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5060",
+              "productName": "热牛奶中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "12.80"
+        },
+        {
+          "orderId": "SN0220687179762",
+          "orderType": "堂食",
+          "createTime": "2026-07-13 12:21:17",
+          "beType": "MC_CAFE",
+          "beCode": "BE0718",
+          "storeCode": "S1980",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P7679",
+              "productName": "巨无霸",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P6516",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P1571",
+              "productName": "可乐中杯",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "72.05"
+        },
+        {
+          "orderId": "SN0109627665598",
+          "orderType": "到店取餐",
+          "createTime": "2026-05-24 11:58:25",
+          "beType": "DT",
+          "beCode": "BE0590",
+          "storeCode": "S7336",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6929",
+              "productName": "冰美式中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "22.43"
+        },
+        {
+          "orderId": "SN0305383259515",
+          "orderType": "堂食",
+          "createTime": "2026-04-28 11:05:31",
+          "beType": "STORE",
+          "beCode": "BE0585",
+          "storeCode": "S3653",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6735",
+              "productName": "巨无霸",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P5607",
+              "productName": "纯悦",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "17.28"
+        },
+        {
+          "orderId": "SN0442992460611",
+          "orderType": "到店取餐",
+          "createTime": "2026-06-20 12:51:09",
+          "beType": "MC_CAFE",
+          "beCode": "BE0485",
+          "storeCode": "S5938",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2655",
+              "productName": "麦辣鸡翅-2块",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "13.39"
+        },
+        {
+          "orderId": "SN0571475230487",
+          "orderType": "外卖",
+          "createTime": "2026-08-04 13:15:31",
+          "beType": "MC_CAFE",
+          "beCode": "BE0783",
+          "storeCode": "S5724",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6810",
+              "productName": "双层吉士汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P1740",
+              "productName": "巨无霸",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9357",
+              "productName": "大薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "39.44"
+        },
+        {
+          "orderId": "SN0782935884692",
+          "orderType": "得来速",
+          "createTime": "2026-04-05 19:59:33",
+          "beType": "STORE",
+          "beCode": "BE0579",
+          "storeCode": "S1106",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P9442",
+              "productName": "巨无霸",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P3628",
+              "productName": "草莓麦旋风",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "30.56"
+        },
+        {
+          "orderId": "SN0897285300467",
+          "orderType": "堂食",
+          "createTime": "2026-04-02 13:42:51",
+          "beType": "MC_CAFE",
+          "beCode": "BE0539",
+          "storeCode": "S9087",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5119",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2694",
+              "productName": "脆薯饼",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "43.60"
+        },
+        {
+          "orderId": "SN0462449360049",
+          "orderType": "得来速",
+          "createTime": "2026-06-12 20:51:28",
+          "beType": "STORE",
+          "beCode": "BE0604",
+          "storeCode": "S9749",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P7120",
+              "productName": "麦香鱼",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7551",
+              "productName": "麦旋风奥利奥",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "22.94"
+        },
+        {
+          "orderId": "SN0845318246604",
+          "orderType": "堂食",
+          "createTime": "2026-03-21 12:33:21",
+          "beType": "DT",
+          "beCode": "BE0657",
+          "storeCode": "S2741",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6354",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "12.71"
+        },
+        {
+          "orderId": "SN0870683506828",
+          "orderType": "到店取餐",
+          "createTime": "2026-06-24 22:13:22",
+          "beType": "MC_CAFE",
+          "beCode": "BE0485",
+          "storeCode": "S5004",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5561",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P8077",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P8372",
+              "productName": "优品豆浆大杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "56.43"
+        },
+        {
+          "orderId": "SN0886133866781",
+          "orderType": "得来速",
+          "createTime": "2026-03-05 12:40:36",
+          "beType": "MC_CAFE",
+          "beCode": "BE0477",
+          "storeCode": "S4667",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P6952",
+              "productName": "板烧鸡腿堡",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P3853",
+              "productName": "麦旋风奥利奥",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7025",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "79.12"
+        },
+        {
+          "orderId": "SN0824225927959",
+          "orderType": "堂食",
+          "createTime": "2026-06-30 19:24:56",
+          "beType": "DT",
+          "beCode": "BE0446",
+          "storeCode": "S8956",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P3946",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P1744",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7955",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "61.05"
+        },
+        {
+          "orderId": "SN0311984833294",
+          "orderType": "得来速",
+          "createTime": "2026-07-25 11:42:33",
+          "beType": "STORE",
+          "beCode": "BE0792",
+          "storeCode": "S1471",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P9775",
+              "productName": "巨无霸",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7916",
+              "productName": "脆薯饼",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9069",
+              "productName": "草莓麦旋风",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "55.16"
+        },
+        {
+          "orderId": "SN0130906305677",
+          "orderType": "得来速",
+          "createTime": "2026-08-18 23:55:42",
+          "beType": "DT",
+          "beCode": "BE0747",
+          "storeCode": "S4512",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5587",
+              "productName": "纯悦",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P4853",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "24.57"
+        },
+        {
+          "orderId": "SN0288349303694",
+          "orderType": "到店取餐",
+          "createTime": "2026-02-15 13:11:04",
+          "beType": "MC_CAFE",
+          "beCode": "BE0537",
+          "storeCode": "S3433",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2113",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P4755",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P1716",
+              "productName": "无糖可口可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "64.65"
+        },
+        {
+          "orderId": "SN0481337647936",
+          "orderType": "堂食",
+          "createTime": "2026-08-06 11:41:14",
+          "beType": "DT",
+          "beCode": "BE0607",
+          "storeCode": "S2486",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4348",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7598",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9962",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "42.42"
+        },
+        {
+          "orderId": "SN0841925080825",
+          "orderType": "到店取餐",
+          "createTime": "2026-05-15 22:13:01",
+          "beType": "STORE",
+          "beCode": "BE0733",
+          "storeCode": "S7125",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P9839",
+              "productName": "纯悦",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P7296",
+              "productName": "无糖可口可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "42.82"
+        },
+        {
+          "orderId": "SN0179899553701",
+          "orderType": "得来速",
+          "createTime": "2026-09-30 15:03:09",
+          "beType": "DT",
+          "beCode": "BE0614",
+          "storeCode": "S5213",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P3204",
+              "productName": "双层吉士汉堡",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P6112",
+              "productName": "草莓麦旋风",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P4610",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "90.56"
+        },
+        {
+          "orderId": "SN0734244615703",
+          "orderType": "到店取餐",
+          "createTime": "2026-09-01 12:50:51",
+          "beType": "STORE",
+          "beCode": "BE0672",
+          "storeCode": "S2377",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4582",
+              "productName": "圆筒冰淇淋",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2298",
+              "productName": "麦乐鸡4块",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "26.32"
+        },
+        {
+          "orderId": "SN0770289766799",
+          "orderType": "到店取餐",
+          "createTime": "2026-03-18 23:05:57",
+          "beType": "MC_CAFE",
+          "beCode": "BE0398",
+          "storeCode": "S7339",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P7834",
+              "productName": "麦辣鸡腿汉堡",
+              "quantity": 2,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "32.10"
+        },
+        {
+          "orderId": "SN0988766521839",
+          "orderType": "到店取餐",
+          "createTime": "2026-05-02 19:55:59",
+          "beType": "STORE",
+          "beCode": "BE0227",
+          "storeCode": "S8414",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2839",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2246",
+              "productName": "可乐中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "44.76"
+        },
+        {
+          "orderId": "SN0140953754063",
+          "orderType": "到店取餐",
+          "createTime": "2026-02-16 23:53:17",
+          "beType": "STORE",
+          "beCode": "BE0331",
+          "storeCode": "S5960",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5228",
+              "productName": "巨无霸",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "16.19"
+        },
+        {
+          "orderId": "SN0486203403504",
+          "orderType": "堂食",
+          "createTime": "2026-04-16 11:22:23",
+          "beType": "STORE",
+          "beCode": "BE0863",
+          "storeCode": "S3223",
+          "storeName": "麦当劳（万象城得来速店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4991",
+              "productName": "中薯条",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P2452",
+              "productName": "巨无霸",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "53.16"
+        },
+        {
+          "orderId": "SN0556726715339",
+          "orderType": "到店取餐",
+          "createTime": "2026-02-15 12:16:01",
+          "beType": "MC_CAFE",
+          "beCode": "BE0216",
+          "storeCode": "S4046",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4737",
+              "productName": "脆薯饼",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "18.10"
+        },
+        {
+          "orderId": "SN0429159308089",
+          "orderType": "外卖",
+          "createTime": "2026-06-19 17:29:54",
+          "beType": "MC_CAFE",
+          "beCode": "BE0176",
+          "storeCode": "S2958",
+          "storeName": "麦当劳（大学城店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2472",
+              "productName": "麦旋风奥利奥",
+              "quantity": 2,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P1578",
+              "productName": "圆筒冰淇淋",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "63.36"
+        },
+        {
+          "orderId": "SN0581638952815",
+          "orderType": "堂食",
+          "createTime": "2026-08-24 23:20:51",
+          "beType": "STORE",
+          "beCode": "BE0123",
+          "storeCode": "S4438",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4376",
+              "productName": "圆筒冰淇淋",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P9199",
+              "productName": "双层吉士汉堡",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "33.68"
+        },
+        {
+          "orderId": "SN0875544311619",
+          "orderType": "得来速",
+          "createTime": "2026-10-10 18:28:54",
+          "beType": "MC_CAFE",
+          "beCode": "BE0884",
+          "storeCode": "S6907",
+          "storeName": "麦当劳（中山路餐厅）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P2318",
+              "productName": "冰美式中杯",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "23.69"
+        },
+        {
+          "orderId": "SN0794768349954",
+          "orderType": "堂食",
+          "createTime": "2026-06-18 20:38:16",
+          "beType": "DT",
+          "beCode": "BE0875",
+          "storeCode": "S7936",
+          "storeName": "麦当劳（科技园店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P4574",
+              "productName": "中薯条",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "17.35"
+        },
+        {
+          "orderId": "SN0735152462724",
+          "orderType": "堂食",
+          "createTime": "2026-05-11 19:37:23",
+          "beType": "STORE",
+          "beCode": "BE0958",
+          "storeCode": "S8619",
+          "storeName": "麦当劳（滨江道 DT 店）",
+          "orderStatus": "已完成",
+          "orderProductList": [
+            {
+              "productCode": "P5630",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            },
+            {
+              "productCode": "P4263",
+              "productName": "麦乐鸡5块",
+              "quantity": 1,
+              "comboItemList": []
+            }
+          ],
+          "realTotalAmount": "19.14"
+        }
+      ]
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "list-nutrition-foods": {
+    "data": "[160]{productName,nutritionDescription,energyKj,energyKcal,protein,fat,carbohydrate,sodium,calcium}:\n  猪柳麦满分,null,1288,308,16,16,24,781,213\n  猪柳蛋麦满分,null,1618,387,23,21,25,846,243\n  烟肉蛋麦满分,null,1089,260,16,10,24,483,238\n  火腿扒麦满分,null,1092,261,14,12,24,608,131\n  中薯条,null,1210,289,4,12,38,165,18\n  大薯条,null,1587,379,6,16,50,216,23\n  小薯条,null,877,210,3,9,28,120,13\n  迷你薯条,null,444,106,2,4,14,61,6\n  圆筒冰淇淋,null,391,93,2,3,14,36,77\n  麦乐鸡5块,null,890,213,12,12,13,422,9\n  大杯玉米杯,null,365,87,4,1,12,2,10\n  小杯玉米杯,null,223,53,2,1,7,1,6\n  麦辣鸡翅-2块,null,937,224,13,15,9,537,13\n  朱古力新地,null,1178,282,5,9,44,126,182\n  草莓新地,null,1027,245,4,6,43,84,158\n  奥利奥麦旋风,null,1115,266,5,9,40,116,185\n  草莓麦旋风,null,1234,295,6,9,47,122,186\n  香芋派,null,971,232,2,12,28,159,7\n  菠萝派,null,925,221,2,11,27,147,5\n  大脆鸡扒麦满分,null,1510,361,16,17,35,804,130\n  原味板烧鸡腿麦满分,null,1029,246,15,9,25,611,133\n  双层原味板烧鸡腿麦满分,null,1486,355,23,17,27,984,138\n  吉士汉堡包,null,1231,294,16,12,30,673,144\n  双层吉士汉堡,null,1796,429,27,22,31,1017,232\n  麦香鸡,null,1546,369,15,17,39,731,73\n  麦香鱼,null,1359,325,16,13,35,556,99\n  麦辣鸡腿汉堡,null,2029,485,24,24,42,1208,154\n  板烧鸡腿堡,null,1638,391,23,17,35,1041,93\n  巨无霸,null,2146,513,27,26,42,961,171\n  培根蔬萃双层牛堡,null,1850,442,24,23,34,728,73\n  可乐中杯,null,616,147,0,0,36,0,10\n  可乐大杯,null,936,224,0,0,55,0,15\n  可乐小杯,null,446,107,0,0,26,0,7\n  雪碧中杯,null,440,105,0,0,26,29,0\n  雪碧大杯,null,669,160,0,0,39,45,0\n  雪碧小杯,null,319,76,0,0,19,21,0\n  无糖可口可乐中杯,null,0,0,0,0,1,35,0\n  无糖可口可乐大杯,null,0,0,0,0,1,53,0\n  无糖可口可乐小杯,null,0,0,0,0,0,25,0\n  大杯鲜萃咖啡,null,54,13,1,0,0,3,8\n  小杯鲜萃咖啡,null,63,15,1,0,3,2,6\n  锡兰红茶,null,8,2,0,0,0,0,5\n  热朱古力,null,525,125,2,2,22,107,36\n  纯牛奶（盒装）,null,541,129,7,7,10,73,231\n  麦旋酷阳光橙,null,955,228,1,2,50,77,52\n  浓缩咖啡,null,54,13,1,0,2,0,7\n  那么大鸡排,null,1612,385,24,21,24,996,13\n  阳光柠檬红茶中杯,null,488,117,0,0,29,17,0\n  阳光柠檬红茶大杯,null,743,178,0,0,43,25,0\n  阳光柠檬红茶小杯,null,354,85,0,0,21,12,0\n  脆薯饼,null,612,146,1,9,14,311,7\n  脆香油条,null,844,202,5,12,19,230,18\n  100%苹果汁,null,368,88,0,0,21,0,0\n  汉堡包,null,1039,248,13,8,29,492,61\n  麦乐鸡4块,null,712,170,10,10,11,337,7\n  小杯玉米杯,null,223,53,2,1,7,1,6\n  纯牛奶（盒装）,null,541,129,7,7,10,73,231\n  纯悦,能量约清水1杯,0,0,0,0,0,0,0\n  苹果片,null,133,32,0,0,7,0,18\n  不素之霸双层牛堡,null,2062,493,28,27,34,1012,75\n  双层深海鳕鱼堡,null,2029,485,28,21,46,917,147\n  儿童鱼排堡,null,1126,269,15,6,36,442,58\n  培根安格斯厚牛堡,null,2959,707,34,44,43,1037,161\n  芝士安格斯厚牛堡,能量约鲈鱼1条,2914,696,32,44,43,897,150\n  yeyeyeye奶冻款,null,932,223,1,4,43,37,64\n  皮蛋鸡肉粥,null,558,133,6,3,20,611,20\n  雪菜脆笋鸡肉粥,null,504,120,4,2,22,552,14\n  猪柳炒双蛋堡,null,1827,437,25,24,29,705,116\n  yeyeyeye爆珠款,null,889,212,1,3,42,122,124\n  柠檬拉明顿,能量约猕猴桃2个,506,121,2,7,12,35,17\n  芝士双层安格斯厚牛堡,null,4195,1003,58,65,46,1373,251\n  培根双层安格斯厚牛堡,null,4128,987,55,64,46,1191,226\n  火腿扒早安营养卷,null,1857,444,16,24,39,1065,108\n  麦麦脆汁鸡-琵琶腿,null,1372,328,21,20,16,905,24\n  德式图林根香肠,null,366,87,5,6,2,293,5\n  图林根香肠早安营养卷,null,1779,425,14,23,38,977,68\n  麦麦脆汁鸡-带骨里脊,null,1389,332,22,18,16,812,25\n  【美汁源】“黄金橙橙”,null,691,165,0,0,41,53,0\n  优品豆浆大杯,null,844,202,8,4,33,43,21\n  优品豆浆小杯,null,633,151,6,3,25,32,15\n  浓浓黑巧雪冰中杯,null,1501,359,8,12,51,224,207\n  浓浓黑巧雪冰大杯,null,1857,444,11,14,65,258,251\n  特浓奶香雪冰中杯,null,1124,269,6,11,36,180,188\n  特浓奶香雪冰大杯,null,1291,309,7,12,42,192,223\n  浓浓抹茶雪冰中杯,null,1208,289,7,11,39,181,220\n  浓浓抹茶雪冰大杯,null,1418,339,8,12,48,194,270\n  热牛奶中杯,null,738,176,10,8,15,101,319\n  热牛奶大杯,null,1006,240,13,11,21,137,435\n  热牛奶小杯,null,617,147,8,7,13,84,267\n  冰牛奶中杯,null,939,224,13,11,19,128,406\n  冰牛奶大杯,null,1127,269,15,13,23,154,487\n  冰牛奶小杯,null,617,147,8,7,13,84,267\n  冰奶铁中杯,null,618,148,8,7,13,77,251\n  冰奶铁大杯,null,678,162,9,7,15,85,275\n  冰奶铁小杯,null,358,86,5,4,8,44,144\n  热奶铁中杯,null,779,186,11,8,17,99,320\n  热奶铁大杯,null,1040,249,14,11,22,134,431\n  热奶铁小杯,null,559,134,8,6,12,72,231\n  冰燕麦奶铁中杯,null,554,132,3,5,17,87,270\n  冰燕麦奶铁大杯,null,608,145,4,5,19,96,296\n  冰燕麦奶铁小杯,null,322,77,2,3,10,50,155\n  热燕麦奶铁中杯,null,697,167,4,6,22,112,345\n  热燕麦奶铁大杯,null,929,222,5,8,29,152,464\n  热燕麦奶铁小杯,null,500,120,3,5,16,81,248\n  冰美式中杯,null,54,13,1,0,2,0,7\n  冰美式大杯,null,60,14,1,0,2,0,8\n  冰美式小杯,null,41,10,1,0,1,0,6\n  热美式中杯,null,54,13,1,0,2,0,7\n  热美式大杯,null,60,14,1,0,2,0,8\n  热美式小杯,null,41,10,1,0,1,0,6\n  冰焦糖玛奇朵,null,618,148,8,7,13,77,251\n  热焦糖玛奇朵,null,698,167,9,7,15,88,284\n  卡布奇诺中杯,null,698,167,9,7,15,88,285\n  卡布奇诺大杯,null,932,223,13,10,20,120,385\n  冰浓浓燕麦黑巧中杯,null,500,120,2,5,16,87,263\n  冰浓浓燕麦黑巧大杯,null,547,131,3,5,17,95,388\n  冰燕麦奶中杯,null,833,199,4,8,26,145,438\n  冰燕麦奶大杯,null,1000,239,5,9,32,174,525\n  冰燕麦奶小杯,null,547,131,3,5,17,95,288\n  热燕麦奶中杯,null,655,157,3,6,21,114,344\n  热燕麦奶大杯,null,893,213,4,8,28,156,469\n  热燕麦奶小杯,null,547,131,3,5,17,95,288\n  冰浓浓抹茶牛奶中杯,null,821,196,8,6,25,80,275\n  冰浓浓抹茶牛奶大杯,null,1004,240,9,7,33,89,314\n  热浓浓抹茶牛奶中杯,null,996,238,11,8,29,104,351\n  热浓浓抹茶牛奶大杯,null,1393,333,14,12,41,142,482\n  冰浓浓黑巧中杯,null,563,135,8,6,12,77,244\n  冰浓浓黑巧大杯,null,617,147,8,7,13,84,267\n  热浓浓黑巧中杯,null,738,176,10,8,15,101,319\n  热浓浓黑巧大杯,null,1006,240,13,11,21,137,435\n  川宁伯爵红茶,null,7,2,0,0,0,0,0\n  抹茶阿芙佳朵,null,613,147,3,4,23,50,136\n  咖啡阿芙佳朵,null,583,139,4,4,21,49,111\n  热浓浓燕麦黑巧中杯,null,655,157,3,6,21,114,344\n  热浓浓燕麦黑巧大杯,null,893,213,4,8,28,156,469\n  草莓拉明顿,null,507,121,2,8,11,34,17\n  原味板烧鸡腿炒双蛋堡,null,1754,419,27,21,30,715,116\n  双层猪柳蛋麦满分,null,2148,513,29,32,26,1210,249\n  双层火腿扒麦满分,null,1611,385,21,22,26,979,134\n  脆脆薯条,null,1168,279,4,14,32,540,13\n  麦麦趣鸡球,null,1113,266,17,13,19,789,13\n  酥酥多笋卷,null,1431,342,14,15,36,1044,41\n  薄皮焦香V翅,null,804,192,17,11,6,594,15\n  蜜汁BBQ风味薄皮脆汁鸡-带骨里脊,null,637,152,20,5,6,635,28\n  蜜汁BBQ风味薄皮脆汁鸡-琵琶腿,null,724,173,18,9,5,547,15\n  果然多肉,null,2001,478,36,17,44,1343,190\n  “苹板”支撑Pro,null,1993,476,25,18,50,1077,117\n  专“薯鱼”你,null,1936,463,18,17,57,652,123\n  绝代双翅,null,1964,469,32,27,23,1167,34\n  牛气满满,null,2073,495,26,24,42,764,79\n  蜜汁快乐,null,1081,258,22,9,20,721,34\n  迷你朱古力新地,null,586,140,3,4,22,63,90\n  迷你草莓新地,null,511,122,2,3,21,42,78\n  鲜蔬蛋沙拉叠叠卷,null,1114,266,11,14,24,518,62\n  鸡肉蛋沙拉叠叠卷,null,1621,387,17,21,31,842,67\n  中杯怡泉+C,null,461,110,0,0,27,0,0\n  大杯怡泉+C,null,701,168,0,0,41,0,0\n  蒜了吧黄油风味薄皮脆汁鸡-琵琶腿,null,688,164,19,6,6,867,9\n  蒜了吧黄油风味薄皮脆汁鸡-带骨里脊,null,526,126,19,2,4,750,59\n  柠萌风味薄皮焦香V翅,null,855,204,18,11,6,768,22",
+    "text": "sample",
+    "isError": false
+  },
+  "query-my-account": {
+    "data": {
+      "accountId": "SAMPLE-ACCOUNT",
+      "accumulativePoint": "1268.5",
+      "availablePoint": "47.5",
+      "currency": "麦享会积分",
+      "currentMouthExpirePoint": "120.0",
+      "expiredPoint": "89.0",
+      "frozenPoint": "0",
+      "lastMouthExpirePoint": "0",
+      "nextMouthExpirePoint": "0",
+      "usedPoint": "1032.0"
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "query-my-coupons": {
+    "data": {
+      "list": [
+        {
+          "title": "中薯条买一送一",
+          "status": "未使用"
+        },
+        {
+          "title": "麦旋风5折券",
+          "status": "未使用"
+        }
+      ]
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "available-coupons": {
+    "data": {
+      "list": [
+        {
+          "title": "中薯条买一送一",
+          "status": "可领取"
+        },
+        {
+          "title": "王牌小食拼",
+          "status": "可领取"
+        },
+        {
+          "title": "免费脆薯饼",
+          "status": "可领取"
+        },
+        {
+          "title": "9.9元中杯冰美式",
+          "status": "可领取"
+        }
+      ]
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "query-lottery-info": {
+    "data": {
+      "drawPoint": "24",
+      "activityStatusText": "进行中",
+      "prizes": []
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "query-my-prizes": {
+    "data": {
+      "prizes": []
+    },
+    "text": "sample",
+    "isError": false
+  },
+  "mall-order-list": {
+    "data": [
+      {
+        "hasNext": false,
+        "lastId": 0,
+        "list": []
+      }
+    ],
+    "text": "sample",
+    "isError": false
+  },
+  "campaign-calendar": {
+    "data": {},
+    "text": "sample",
+    "isError": false
+  },
+  "now-time-info": {
+    "data": {
+      "formatted": "2026-10-11 12:00:00"
+    },
+    "text": "sample",
+    "isError": false
+  }
+}

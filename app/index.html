@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麦麦体检报告</title>
+<style>
+  :root{
+    --ink:#1b1b1d; --ink-2:#4a4a50; --ink-3:#8a8a92;
+    --line:#e6e6e9; --grid:#f4f4f6; --bg:#fbfbfc;
+    --card:#ffffff; --brand:#ffc72c; --brand-ink:#8a6d00;
+    --good:#1f9d55; --warn:#e8590c; --info:#2b6cb0;
+    --radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0/100% 28px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/28px 100%,
+      var(--bg);
+    color:var(--ink);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px 64px}
+
+  /* ---------- 深色顶栏 ---------- */
+  header{
+    background:#17171a;color:#fff;position:sticky;top:0;z-index:20;
+    box-shadow:0 1px 0 rgba(0,0,0,.4);
+  }
+  .bar{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{
+    width:30px;height:30px;border-radius:8px;background:var(--brand);
+    display:grid;place-items:center;font-weight:800;color:#17171a;font-size:15px;flex:none;
+  }
+  .bar h1{font-size:17px;font-weight:700;margin:0;letter-spacing:.5px}
+  .bar .sub{font-size:12px;color:#9a9aa2;margin-left:2px}
+  .bar .grow{flex:1}
+  .btn{
+    border:1px solid #3a3a40;background:#222226;color:#e8e8ec;border-radius:8px;
+    padding:7px 13px;font-size:13px;cursor:pointer;white-space:nowrap;
+  }
+  .btn:hover{background:#2d2d33;border-color:#4a4a52}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#17171a;font-weight:700}
+  .btn.primary:hover{filter:brightness(1.06)}
+
+  /* ---------- 卡片 ---------- */
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;margin-top:20px;box-shadow:0 1px 2px rgba(16,16,20,.04);
+  }
+  .card>h2{
+    margin:0 0 14px;font-size:13px;font-weight:700;letter-spacing:1.2px;
+    color:var(--ink-3);text-transform:uppercase;
+  }
+  .card>h2 b{color:var(--ink)}
+
+  /* ---------- 结论卡 ---------- */
+  .verdicts{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:20px}
+  .verdict{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--info);
+    border-radius:10px;padding:14px 16px;box-shadow:0 1px 2px rgba(16,16,20,.04);
+  }
+  .verdict.warn{border-left-color:var(--warn)}
+  .verdict.good{border-left-color:var(--good)}
+  .verdict .tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.5px;
+    padding:2px 8px;border-radius:20px;background:#f0f0f3;color:var(--ink-2);margin-bottom:8px;
+  }
+  .verdict.warn .tag{background:#fff3e8;color:#a1470a}
+  .verdict.good .tag{background:#e9f7ef;color:#166b3d}
+  .verdict.info .tag{background:#e8f1fb;color:#1d5fa8}
+  .verdict h3{margin:0 0 6px;font-size:15px;line-height:1.45}
+  .verdict p{margin:0;font-size:13px;color:var(--ink-2)}
+
+  /* ---------- KPI ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:14px;margin-top:20px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .k{font-size:12px;color:var(--ink-3);margin-bottom:4px}
+  .kpi .v{font-size:24px;font-weight:750;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+  .kpi .u{font-size:12px;font-weight:500;color:var(--ink-3);margin-left:2px}
+  .kpi .n{font-size:11px;color:var(--ink-3);margin-top:4px}
+
+  /* ---------- 图表 ---------- */
+  .charts{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:820px){.charts{grid-template-columns:1fr}}
+  .chart-box svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--ink-2);margin-top:8px}
+  .legend i{width:9px;height:9px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:middle}
+
+  /* ---------- 表格 ---------- */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+  th{font-size:12px;color:var(--ink-3);font-weight:600;letter-spacing:.4px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:none}
+  .rank{color:var(--ink-3);font-variant-numeric:tabular-nums;width:34px}
+  .rank.top{color:var(--brand-ink);font-weight:800}
+  .bar-cell{height:8px;border-radius:4px;background:#f0f0f3;overflow:hidden;min-width:60px}
+  .bar-cell i{display:block;height:100%;background:var(--brand);border-radius:4px}
+
+  .split{display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:center}
+  @media (max-width:640px){.split{grid-template-columns:1fr}}
+  .macro{list-style:none;margin:0;padding:0;font-size:13px}
+  .macro li{display:flex;align-items:center;gap:8px;margin:9px 0}
+  .macro i{width:10px;height:10px;border-radius:3px;flex:none}
+  .macro span{flex:1;color:var(--ink-2)}
+  .macro b{font-variant-numeric:tabular-nums}
+
+  .empty{padding:36px 10px;text-align:center;color:var(--ink-3);font-size:14px}
+  .empty code{background:#f2f2f5;padding:2px 6px;border-radius:5px;font-size:12px}
+
+  footer{margin-top:28px;font-size:12px;color:var(--ink-3);line-height:1.8;border-top:1px solid var(--line);padding-top:16px}
+  .share{background:#fafafa;border:1px dashed #d5d5da;border-radius:10px;padding:16px;white-space:pre-wrap;font-size:13px;color:var(--ink-2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .dropping{outline:2px dashed var(--brand);outline-offset:6px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo">M</div>
+    <div>
+      <h1>麦麦体检报告</h1>
+      <div class="sub" id="metaLine">加载中…</div>
+    </div>
+    <div class="grow"></div>
+    <button class="btn" id="btnDemo">看演示</button>
+    <button class="btn" id="btnLoad">载入 report.json</button>
+    <button class="btn primary" id="btnCopy">复制文字版</button>
+    <input type="file" id="fileInput" accept=".json,application/json" hidden>
+  </div>
+</header>
+
+<div class="wrap" id="app"></div>
+
+<footer>
+  <div style="max-width:1080px;margin:0 auto;padding:0 20px">
+    数据来源：麦当劳 MCP Server（<code>order-list</code> / <code>query-my-account</code> / <code>list-nutrition-foods</code> 等只读工具）。
+    餐品营养、价格与供应状态以麦当劳官方渠道实时结果为准；本报告不构成医疗、营养或其他专业建议。
+  </div>
+</footer>
+
+<script>
+/* 构建时由 scripts/render.py 注入真实数据；预览原始文件时为 null。 */
+window.__CHECKUP_DATA__ = /*__CHECKUP_DATA__*/null;
+window.__CHECKUP_SAMPLE__ = /*__CHECKUP_SAMPLE__*/null;
+
+(function () {
+  "use strict";
+
+  var app = document.getElementById("app");
+  var WEEKDAY = ["周一","周二","周三","周四","周五","周六","周日"];
+
+  /* ---------------- 工具 ---------------- */
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function fmt(n, d) {
+    if (n == null || isNaN(n)) return "—";
+    d = d == null ? 0 : d;
+    return Number(n).toLocaleString("zh-CN", { minimumFractionDigits: d, maximumFractionDigits: d });
+  }
+  function yuan(n) { return "¥" + fmt(n, 2); }
+  function pct(n, d) { return fmt(n, d == null ? 1 : d) + "%"; }
+  function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
+  function maxOf(arr, pick) {
+    var m = 0;
+    arr.forEach(function (a) { var v = pick(a); if (v > m) m = v; });
+    return m || 1;
+  }
+  function niceMax(v) {
+    if (v <= 0) return 1;
+    var exp = Math.floor(Math.log(v) / Math.LN10);
+    var f = v / Math.pow(10, exp);
+    var nf = f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10;
+    return nf * Math.pow(10, exp);
+  }
+  function tick(n) {
+    return Number.isInteger(n) ? String(n) : (Math.round(n * 10) / 10).toString();
+  }
+
+  /* ---------------- 图表（手写 SVG，零依赖） ---------------- */
+
+  function barChart(rows, opt) {
+    opt = opt || {};
+    var w = 560, h = opt.height || 150, padL = 26, padB = 22, padT = 10, padR = 6;
+    var innerW = w - padL - padR, innerH = h - padT - padB;
+    var max = niceMax(maxOf(rows, function (r) { return r.value; }));
+    var step = innerW / rows.length;
+    var barW = Math.max(3, Math.min(26, step * 0.62));
+    var parts = [];
+
+    parts.push('<svg viewBox="0 0 ' + w + " " + h + '" role="img" aria-label="' + esc(opt.label || "") + '">');
+    [0, 0.5, 1].forEach(function (g) {
+      var y = padT + innerH * (1 - g);
+      parts.push('<line x1="' + padL + '" y1="' + y + '" x2="' + (w - padR) + '" y2="' + y +
+        '" stroke="#ececef" stroke-width="1"/>');
+      parts.push('<text x="' + (padL - 6) + '" y="' + (y + 3.5) + '" text-anchor="end" font-size="9" fill="#a0a0a8">' +
+        tick(max * g) + "</text>");
+    });
+
+    rows.forEach(function (r, i) {
+      var bh = r.value / max * innerH;
+      var x = padL + i * step + (step - barW) / 2;
+      var y = padT + innerH - bh;
+      var fill = r.color || "var(--brand)";
+      parts.push('<rect x="' + x.toFixed(1) + '" y="' + Math.max(y, padT).toFixed(1) + '" width="' + barW.toFixed(1) +
+        '" height="' + Math.max(bh, r.value > 0 ? 1.5 : 0).toFixed(1) + '" rx="2.5" fill="' + fill + '"><title>' +
+        esc(r.label) + "：" + esc(r.value) + (opt.unit || "") + "</title></rect>");
+      if (opt.showLabel) {
+        parts.push('<text x="' + (padL + i * step + step / 2).toFixed(1) + '" y="' + (h - 6) +
+          '" text-anchor="middle" font-size="9" fill="#8a8a92">' + esc(r.label) + "</text>");
+      }
+    });
+    parts.push("</svg>");
+    return parts.join("");
+  }
+
+  function donut(slices, size) {
+    size = size || 168;
+    var r = size / 2 - 10, cx = size / 2, cy = size / 2;
+    var total = slices.reduce(function (s, x) { return s + x.value; }, 0) || 1;
+    var angle = -Math.PI / 2, parts = [];
+    parts.push('<svg viewBox="0 0 ' + size + " " + size + '" role="img" aria-label="营养素构成">');
+
+    slices.forEach(function (s) {
+      var frac = s.value / total;
+      if (frac <= 0) return;
+      var a2 = angle + frac * Math.PI * 2;
+      var large = frac > 0.5 ? 1 : 0;
+      var x1 = cx + r * Math.cos(angle), y1 = cy + r * Math.sin(angle);
+      var x2 = cx + r * Math.cos(a2), y2 = cy + r * Math.sin(a2);
+      parts.push('<path d="M ' + x1.toFixed(2) + " " + y1.toFixed(2) + " A " + r + " " + r + " 0 " + large +
+        " 1 " + x2.toFixed(2) + " " + y2.toFixed(2) + '" fill="none" stroke="' + s.color +
+        '" stroke-width="20" stroke-linecap="butt"><title>' + esc(s.label) + " " + pct(frac * 100) +
+        "</title></path>");
+      angle = a2;
+    });
+    parts.push('<text x="' + cx + '" y="' + (cy - 2) + '" text-anchor="middle" font-size="17" font-weight="700" fill="#1b1b1d">' +
+      fmt(slices.reduce(function (s, x) { return s + x.value; }, 0), 0) + "</text>");
+    parts.push('<text x="' + cx + '" y="' + (cy + 15) + '" text-anchor="middle" font-size="10" fill="#8a8a92">克 / 总计</text>');
+    parts.push("</svg>");
+    return parts.join("");
+  }
+
+  /* ---------------- 渲染 ---------------- */
+
+  function render(data) {
+    if (!data) { renderEmpty("没有拿到报告数据。"); return; }
+    var o = data.overview || {}, t = data.trends || {}, it = data.items || {};
+    var nu = data.nutrition || {}, pt = data.points || {}, wa = data.wallet || {};
+    var vd = data.verdicts || [];
+
+    document.getElementById("metaLine").textContent =
+      (data.meta && data.meta.mode === "sample" ? "演示数据" :
+       data.meta && data.meta.mode === "live" ? "实时数据" : "离线数据") +
+      (data.meta && data.meta.generatedAt ? " · " + data.meta.generatedAt : "") +
+      (o.orderCount ? " · " + o.orderCount + " 单" : "");
+
+    var html = "";
+
+    /* 结论 */
+    html += '<div class="verdicts">';
+    if (vd.length) {
+      vd.forEach(function (v) {
+        html += '<div class="verdict ' + esc(v.level) + '">' +
+          '<span class="tag">' + esc(v.tag) + "</span>" +
+          "<h3>" + esc(v.title) + "</h3><p>" + esc(v.desc) + "</p></div>";
+      });
+    } else {
+      html += '<div class="card empty">没有可输出的结论</div>';
+    }
+    html += "</div>";
+
+    /* KPI */
+    html += '<div class="kpis">' + [
+      { k: "累计消费", v: fmt(o.totalSpend, 2), u: "元", n: o.spanDays ? "跨越 " + o.spanDays + " 天" : "" },
+      { k: "订单数", v: fmt(o.orderCount), u: "单", n: o.firstOrder ? o.firstOrder + " 起" : "" },
+      { k: "客单价", v: fmt(o.avgTicket, 2), u: "元", n: "" },
+      { k: "累计热量", v: fmt(nu.energyKcal, 0), u: "kcal", n: "≈ " + fmt(nu.bigMacEquivalent, 1) + " 个巨无霸" },
+      { k: "累计钠", v: fmt(nu.sodium, 0), u: "mg", n: "≈ " + fmt(nu.sodiumVsDaily, 1) + " 天推荐上限" },
+      { k: "可用积分", v: fmt(pt.available, 1), u: "分", n: pt.sleeping > 0 ? "沉睡 " + fmt(pt.sleeping, 1) + " 分" : "无过期损耗" }
+    ].map(function (x) {
+      return '<div class="kpi"><div class="k">' + esc(x.k) + '</div><div class="v">' + esc(x.v) +
+        '<span class="u">' + esc(x.u) + '</span></div><div class="n">' + esc(x.n) + "</div></div>";
+    }).join("") + "</div>";
+
+    if (!o.orderCount) {
+      html += '<div class="card empty">当前账号暂无历史订单。<br>' +
+        "换成有消费记录的账号重跑 <code>scripts/checkup.py</code>，或点右上角「看演示」预览效果。</div>";
+    }
+
+    /* 趋势图 */
+    html += '<div class="charts">';
+    html += '<div class="card chart-box"><h2>月度<b>消费</b>节奏</h2>' +
+      barChart((t.byMonth || []).map(function (m) { return { label: m.label, value: m.spend }; }),
+        { height: 168, label: "月度消费", showLabel: true, unit: " 元" }) +
+      '<div class="legend"><span><i style="background:var(--brand)"></i>当月消费（元）</span></div></div>';
+
+    html += '<div class="card chart-box"><h2>24 小时<b>下单</b>节律</h2>' +
+      barChart((t.byHour || []).map(function (b) {
+        return { label: b.hour, value: b.orders, color: (b.hour >= 22 || b.hour < 5) ? "#e8590c" : "var(--brand)" };
+      }), { height: 168, label: "小时分布", showLabel: true }) +
+      '<div class="legend"><span><i style="background:var(--brand)"></i>白天</span>' +
+      '<span><i style="background:#e8590c"></i>深夜（22:00–05:00）</span></div></div>';
+
+    html += '<div class="card chart-box"><h2>一周<b>分布</b></h2>' +
+      barChart((t.byWeekday || []).map(function (b) { return { label: b.label, value: b.orders }; }),
+        { height: 150, label: "周分布", showLabel: true }) + "</div>";
+
+    html += '<div class="card"><h2>营养素<b>构成</b></h2><div class="split">' +
+      donut([
+        { label: "蛋白质", value: nu.protein, color: "#ffc72c" },
+        { label: "脂肪", value: nu.fat, color: "#f59f00" },
+        { label: "碳水", value: nu.carbohydrate, color: "#74a9cf" }
+      ]) +
+      '<ul class="macro">' +
+      "<li><i style=\"background:#ffc72c\"></i><span>蛋白质</span><b>" + fmt(nu.protein, 0) + " g</b><span>(" + pct(nu.macroSplit && nu.macroSplit.protein) + ")</span></li>" +
+      "<li><i style=\"background:#f59f00\"></i><span>脂肪</span><b>" + fmt(nu.fat, 0) + " g</b><span>(" + pct(nu.macroSplit && nu.macroSplit.fat) + ")</span></li>" +
+      "<li><i style=\"background:#74a9cf\"></i><span>碳水化合物</span><b>" + fmt(nu.carbohydrate, 0) + " g</b><span>(" + pct(nu.macroSplit && nu.macroSplit.carbohydrate) + ")</span></li>" +
+      '<li style="margin-top:14px;color:#8a8a92"><span>平均每单 ' + fmt(nu.perOrderKcal, 0) + ' kcal · ' + fmt(nu.perOrderSodium, 0) + ' mg 钠</span></li>' +
+      '<li style="color:#8a8a92"><span>热量总计 ≈ 慢跑 ' + fmt(nu.runKmEquivalent, 0) + ' 公里</span></li>' +
+      "</ul></div></div>";
+    html += "</div>";
+
+    /* 单品榜 */
+    if ((it.top || []).length) {
+      var maxQty = maxOf(it.top, function (x) { return x.qty; });
+      html += '<div class="card"><h2>本命<b>单品</b> TOP10</h2><table><thead><tr>' +
+        '<th class="rank">#</th><th>餐品</th><th class="num">件数</th><th class="num">下单次数</th>' +
+        '<th class="num">累计热量</th><th style="width:120px">占比</th></tr></thead><tbody>';
+      it.top.forEach(function (x, i) {
+        html += "<tr><td class=\"rank" + (i === 0 ? " top" : "") + "\">" + (i + 1) + "</td><td>" + esc(x.name) +
+          '</td><td class="num">' + fmt(x.qty) + '</td><td class="num">' + fmt(x.orders) +
+          '</td><td class="num">' + fmt(x.kcal, 0) + '</td><td><div class="bar-cell"><i style="width:' +
+          (x.qty / maxQty * 100).toFixed(1) + '%"></i></div></td></tr>';
+      });
+      html += "</tbody></table></div>";
+    }
+
+    /* 门店 + 钱包 */
+    html += '<div class="charts">';
+    html += '<div class="card"><h2>积分<b>账本</b></h2><table><tbody>' + [
+      ["可用积分", fmt(pt.available, 1)],
+      ["累计获得", fmt(pt.accumulative, 1)],
+      ["已使用", fmt(pt.used || 0, 1)],
+      ["已过期", fmt(pt.expired, 1)],
+      ["本月将过期", fmt(pt.expiringThisMonth, 1)],
+      ["下月将过期", fmt(pt.nextMonthExpire, 1)]
+    ].map(function (r) {
+      return "<tr><td>" + esc(r[0]) + '</td><td class="num">' + esc(r[1]) + "</td></tr>";
+    }).join("") + "</tbody></table></div>";
+
+    html += '<div class="card"><h2>钱包<b>与商城</b></h2><table><tbody>' + [
+      ["持有优惠券", fmt(wa.ownedCoupons) + " 张"],
+      ["当前可领", fmt(wa.claimableCoupons) + " 张"],
+      ["积分抽奖奖池", fmt(wa.lotteryPrizes) + " 项（每次 " + fmt(wa.lotteryPoint, 0) + " 分）"],
+      ["已中奖品", fmt(wa.prizes) + " 项"],
+      ["商城订单", fmt(wa.mallOrders) + " 笔"],
+      ["营养表匹配率", pct(nu.matchedLineRatio) + "（" + (it.unmatchedCount || 0) + " 项未匹配）"]
+    ].map(function (r) {
+      return "<tr><td>" + esc(r[0]) + '</td><td class="num">' + esc(r[1]) + "</td></tr>";
+    }).join("") + "</tbody></table></div>";
+    html += "</div>";
+
+    if ((wa.claimableNames || []).length) {
+      html += '<div class="card"><h2>还没<b>领</b>的券</h2><p style="margin:0;font-size:14px;color:#4a4a50">' +
+        wa.claimableNames.map(esc).join(" · ") + "</p></div>";
+    }
+
+    app.innerHTML = html;
+    return data;
+  }
+
+  function renderEmpty(msg) {
+    document.getElementById("metaLine").textContent = "暂无数据";
+    app.innerHTML = '<div class="card empty">' + esc(msg) + "<br><br>" +
+      '运行 <code>python scripts/checkup.py --sample --out report.json</code> 生成一份，' +
+      "或点右上角「看演示」。</div>";
+  }
+
+  /* ---------------- 文字版 ---------------- */
+
+  function toText(d) {
+    var o = d.overview || {}, nu = d.nutrition || {}, pt = d.points || {}, it = d.items || {};
+    var lines = [];
+    lines.push("🍔 麦麦体检报告");
+    lines.push("统计区间：" + (o.firstOrder || "—") + " ~ " + (o.lastOrder || "—") +
+      "（" + (o.spanDays || 0) + " 天，" + (o.orderCount || 0) + " 单）");
+    lines.push("累计消费 " + yuan(o.totalSpend) + " · 客单价 " + yuan(o.avgTicket));
+    lines.push("累计热量 " + fmt(nu.energyKcal, 0) + " kcal ≈ " + fmt(nu.bigMacEquivalent, 1) +
+      " 个巨无霸 ≈ 慢跑 " + fmt(nu.runKmEquivalent, 0) + " 公里");
+    lines.push("累计钠 " + fmt(nu.sodium, 0) + " mg（≈" + fmt(nu.sodiumVsDaily, 1) + " 天推荐上限）");
+    lines.push("积分：可用 " + fmt(pt.available, 1) + " / 累计 " + fmt(pt.accumulative, 1) +
+      (pt.sleeping > 0 ? "，其中 " + fmt(pt.sleeping, 1) + " 已过期或将过期 ⚠️" : ""));
+    lines.push("");
+    (d.verdicts || []).forEach(function (v) {
+      lines.push("【" + v.tag + "】" + v.title);
+      if (v.desc) lines.push("  " + v.desc);
+    });
+    if ((it.top || []).length) {
+      lines.push("");
+      lines.push("本命单品 TOP5：");
+      it.top.slice(0, 5).forEach(function (x, i) {
+        lines.push("  " + (i + 1) + ". " + x.name + " × " + x.qty + "（" + fmt(x.kcal, 0) + " kcal）");
+      });
+    }
+    lines.push("");
+    lines.push("— 由麦当劳 MCP + 麦麦体检报告生成");
+    return lines.join("\n");
+  }
+
+  /* ---------------- 交互 ---------------- */
+
+  var current = null;
+
+  function show(d) { current = render(d); }
+
+  document.getElementById("btnDemo").onclick = function () {
+    var s = window.__CHECKUP_SAMPLE__;
+    if (!s) { alert("此文件未内置演示数据，请先运行 scripts/render.py 打包。"); return; }
+    show(JSON.parse(JSON.stringify(s)));
+  };
+  document.getElementById("btnLoad").onclick = function () {
+    document.getElementById("fileInput").click();
+  };
+  document.getElementById("fileInput").onchange = function (e) {
+    var f = e.target.files && e.target.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try { show(JSON.parse(reader.result)); }
+      catch (err) { alert("JSON 解析失败：" + err.message); }
+    };
+    reader.readAsText(f);
+  };
+  document.getElementById("btnCopy").onclick = function () {
+    if (!current) { alert("还没有可复制的报告。"); return; }
+    var text = toText(current);
+    function done() {
+      var b = document.getElementById("btnCopy");
+      b.textContent = "已复制 ✓";
+      setTimeout(function () { b.textContent = "复制文字版"; }, 1600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(); });
+    } else { fallback(); }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { alert("复制失败，请手动选择文本。"); }
+      document.body.removeChild(ta);
+    }
+  };
+
+  /* 拖拽载入 */
+  ["dragenter", "dragover"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { e.preventDefault(); app.classList.add("dropping"); });
+  });
+  ["dragleave", "drop"].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { e.preventDefault(); app.classList.remove("dropping"); });
+  });
+  document.addEventListener("drop", function (e) {
+    var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!f) return;
+    var reader = new FileReader();
+    reader.onload = function () { try { show(JSON.parse(reader.result)); } catch (err) { alert("解析失败"); } };
+    reader.readAsText(f);
+  });
+
+  /* 启动：内置数据 > 演示数据 > 空态 */
+  if (window.__CHECKUP_DATA__) {
+    show(window.__CHECKUP_DATA__);
+  } else if (window.__CHECKUP_SAMPLE__) {
+    show(JSON.parse(JSON.stringify(window.__CHECKUP_SAMPLE__)));
+  } else {
+    renderEmpty("还没有加载报告数据。");
+  }
+})();
+</script>
+</body>
+</html>
