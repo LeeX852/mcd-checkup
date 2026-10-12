@@ -7,6 +7,8 @@
 
 ![报告预览](screenshots/hero.png)
 
+![宣传海报](screenshots/poster.png)
+
 ---
 
 ## 为什么做这个
