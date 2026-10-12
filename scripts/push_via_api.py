@@ -21,11 +21,18 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FILES = [
     "README.md",
     "scripts/make_poster.py",
+    "scripts/make_social.py",
     "scripts/push_via_api.py",
     "screenshots/Premium_3D_product_marketing_i_2026-10-12T13-56-40.png",
     "screenshots/hero-clean.png",
     "screenshots/og-banner.png",
     "screenshots/poster.png",
+    "screenshots/xhs-cover.png",
+    "screenshots/xhs-p2.png",
+    "screenshots/xhs-p3.png",
+    "screenshots/dy-cover.png",
+    "screenshots/dy-p2.png",
+    "screenshots/dy-p3.png",
 ]
 
 
