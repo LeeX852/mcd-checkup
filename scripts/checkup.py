@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """麦麦体检报告 · 主流程。
 
-    python scripts/checkup.py                     # 调 MCP 抓数 -> 生成 report.json
+    python scripts/checkup.py                     # 调 MCP 抓数 -> 生成 report.json + card.json
     python scripts/checkup.py --sample            # 用内置演示数据（无 Token 也能跑）
     python scripts/checkup.py --from-raw raw.json # 从已抓好的原始数据生成
     python scripts/checkup.py --dump-raw          # 同时落盘原始抓取结果，便于排查
@@ -20,6 +20,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 from analyze import build_report                       # noqa: E402
+from card import build_card                            # noqa: E402
 from mcd_mcp import McdMcp, READ_ONLY_TOOLS            # noqa: E402
 
 
@@ -42,6 +43,8 @@ def main(argv=None) -> int:
                         help="使用内置演示数据，不需要 MCP Token")
     parser.add_argument("--from-raw", help="从已抓好的原始 JSON 生成，跳过 MCP 调用")
     parser.add_argument("--dump-raw", action="store_true", help="同时保存原始抓取结果")
+    parser.add_argument("--card-out", help="角色卡数据输出路径，默认与报告同名 card.json")
+    parser.add_argument("--no-card", action="store_true", help="不生成角色卡数据")
     parser.add_argument("--quiet", action="store_true", help="不打印摘要")
     args = parser.parse_args(argv)
 
@@ -79,14 +82,23 @@ def main(argv=None) -> int:
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(report, fh, ensure_ascii=False, indent=2)
 
+    card_path = None
+    if not args.no_card:
+        card_path = args.card_out or os.path.join(
+            os.path.dirname(os.path.abspath(args.out)), "card.json"
+        )
+        with open(card_path, "w", encoding="utf-8") as fh:
+            json.dump(build_card(report), fh, ensure_ascii=False, indent=2)
+
     if not args.quiet:
-        _print_summary(report, args.out)
+        _print_summary(report, args.out, card_path)
     return 0
 
 
-def _print_summary(report: dict, out_path: str) -> None:
+def _print_summary(report: dict, out_path: str, card_path: str = None) -> None:
     overview = report["overview"]
     nutrition = report["nutrition"]
+    persona = report.get("persona") or {}
     print()
     print("========== 麦麦体检报告 ==========")
     print("模式           %s" % report["meta"]["mode"])
@@ -97,7 +109,13 @@ def _print_summary(report: dict, out_path: str) -> None:
           % (nutrition["energyKcal"], nutrition["bigMacEquivalent"]))
     print("可用积分       %.1f" % report["points"]["available"])
     print("结论卡片       %d 张" % len(report["verdicts"]))
+    if persona:
+        print("角色卡         %s · %s（%s · 战力 %.1f）"
+              % (persona["name"], persona["title"],
+                 persona["rarity"]["name"], persona["power"]))
     print("已写入         %s" % os.path.abspath(out_path))
+    if card_path:
+        print("角色卡数据     %s" % os.path.abspath(card_path))
     print("==================================")
 
 

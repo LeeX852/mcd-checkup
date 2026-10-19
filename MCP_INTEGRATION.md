@@ -48,8 +48,11 @@ checkup.py
              └── McdMcp.call(tool)          # tools/call，异常降级不中断
                   └── _unwrap()             # structuredContent → text 抠 JSON → 纯文本
    └── analyze.build_report(raw)            # 拍平订单 → 匹配营养 → 算指标 → 出结论卡
+        └── persona.derive_persona()        # 同一份指标 → 画像（不额外调 MCP）
    └── report.json
-        └── render.py                       # 注入 app/index.html → 单文件报告
+        ├── render.py                       # 注入 app/index.html → 单文件报告
+        └── card.build_card() → card.json   # 五张卡面 + 主题 + 品质
+             └── render.py                  # 注入 app/card.html → 单文件卡片页 → 导出 PNG
 ```
 
 ### 订单与营养的匹配链路（核心难点）
@@ -72,7 +75,21 @@ checkup.py
   叠加营养表和积分账户后，能回答「我这一年到底吃了多少热量、攒了多少没用的积分」。
 - **跨域关联才有信息增量。** 热量 × 订单 = 热量账单；积分 × 过期时间 = 沉睡积分预警；
   券 × 订单 = 漏领的羊毛。单工具都做不到。
-- **可视化自带传播。** 单文件 HTML 报告零依赖、可托管，截图即可分享。
+- **同一份数据二次表达，换来传播。** 角色卡不新增任何 MCP 调用，只把已算好的指标翻译成
+  称号、五维、稀有度和外观参数——用零额外请求，把「看完就关」的报告变成「截图发群」的卡片。
+  这是只读数据的复用率上限：一次抓数，两种产物。
+- **可视化自带传播。** 单文件 HTML 报告与卡片页都零依赖、可托管，截图即可分享。
+
+### 角色卡复用了哪些字段
+
+| 卡面元素 | 数据来源（MCP 工具 → 报告字段） |
+|---|---|
+| 稀有度 / 五维 | `order-list` → 订单数、件数、消费额、复购率、种类数；`byHour` → 深夜占比 |
+| 沉睡积分（决定「沉睡财主」原型） | `query-my-account` → `expiredPoint + currentMouthExpirePoint` |
+| 钱包卡 | `query-my-coupons` / `available-coupons` / `query-lottery-info` / `query-my-prizes` / `mall-order-list` |
+| 战绩卡热量账单 | `list-nutrition-foods` × `order-list` → 累计热量、巨无霸等价、慢跑公里、钠 |
+| 节律卡的常去门店 | `order-list` → `storeName` 频次 |
+| 卡号 / 生成时间 | `now-time-info` + 账号指纹（首末订单日期等） |
 
 ## 五、安全与合规
 

@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麦麦角色卡</title>
+<style>
+  :root{
+    --ink:#1b1b1d;--ink2:#4a4a50;--ink3:#8a8a92;--line:#e6e6e9;--grid:#f4f4f6;--bg:#fbfbfc;
+    --brand:#ffc72c;--radius:12px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px) 0 0/100% 28px,
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/28px 100%,
+      var(--bg);
+    color:var(--ink);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  header{background:#17171a;color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 1px 0 rgba(0,0,0,.4)}
+  .bar{max-width:1180px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .logo{width:30px;height:30px;border-radius:8px;background:var(--brand);display:grid;place-items:center;font-weight:800;color:#17171a;font-size:15px;flex:none}
+  .bar h1{font-size:17px;font-weight:700;margin:0;letter-spacing:.5px}
+  .bar .sub{font-size:12px;color:#9a9aa2;margin-left:2px}
+  .grow{flex:1}
+  .btn{border:1px solid #3a3a40;background:#222226;color:#e8e8ec;border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+  .btn:hover{background:#2d2d33;border-color:#4a4a52}
+  .btn.primary{background:var(--brand);border-color:var(--brand);color:#17171a;font-weight:700}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn:disabled{opacity:.5;cursor:default}
+
+  main{max-width:1180px;margin:0 auto;padding:24px 20px 72px;display:grid;grid-template-columns:1fr 320px;gap:28px;align-items:start}
+  @media (max-width:900px){main{grid-template-columns:1fr}}
+
+  .stage{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .canvas-wrap{
+    position:relative;width:min(470px,100%);border-radius:18px;
+    filter:drop-shadow(0 24px 48px rgba(16,16,20,.16));
+  }
+  canvas{display:block;width:100%;height:auto;border-radius:16px}
+  .hint{font-size:12px;color:var(--ink3);text-align:center;line-height:1.7}
+
+  .panel{position:sticky;top:78px;display:flex;flex-direction:column;gap:18px}
+  @media (max-width:900px){.panel{position:static;order:2}}
+  .box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:0 1px 2px rgba(16,16,20,.04)}
+  .box h2{margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:1.2px;color:var(--ink3);text-transform:uppercase}
+  .tabs{display:flex;flex-direction:column;gap:6px}
+  .tab{
+    display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fff;
+    border-radius:9px;padding:9px 11px;cursor:pointer;text-align:left;font-size:13px;color:var(--ink2);
+  }
+  .tab:hover{border-color:#cfcfd6;background:#fafafb}
+  .tab.on{border-color:#17171a;background:#17171a;color:#fff}
+  .tab .n{font-weight:700;font-size:13px}
+  .tab .e{font-size:10px;letter-spacing:.8px;opacity:.6;margin-left:auto}
+  .swatches{display:flex;flex-wrap:wrap;gap:10px}
+  .sw{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;border:0;background:none;padding:0;font-size:11px;color:var(--ink3)}
+  .sw i{width:40px;height:40px;border-radius:11px;border:2px solid transparent;display:block;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+  .sw.on i{border-color:#17171a}
+  .sw.on{color:var(--ink)}
+  .row{display:flex;align-items:center;gap:8px;justify-content:space-between}
+  select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+  .note{font-size:12px;color:var(--ink3);line-height:1.7;margin-top:10px}
+  .legend{display:flex;flex-direction:column;gap:7px;font-size:12px;color:var(--ink2)}
+  .legend div{display:flex;align-items:center;gap:8px}
+  .legend i{width:12px;height:12px;border-radius:4px;display:block;flex:none;box-shadow:0 0 8px currentColor}
+  .badge-preview{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:#fff3e8;color:#a1470a;margin-left:8px}
+
+  /* 直出模式：?bare=1&card=stats&theme=midnight —— 只留卡面，方便无头浏览器截图 */
+  body.bare header,body.bare .panel,body.bare .hint{display:none}
+  body.bare main{display:block;max-width:none;padding:0}
+  body.bare .stage{gap:0}
+  body.bare .canvas-wrap{width:1080px;filter:none;border-radius:0}
+  body.bare canvas{border-radius:0}
+  body.bare{background:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="bar">
+    <div class="logo">M</div>
+    <div>
+      <h1>麦麦角色卡<span class="badge-preview" id="previewTag" hidden>品质预览</span></h1>
+      <div class="sub" id="metaLine">加载中…</div>
+    </div>
+    <div class="grow"></div>
+    <a class="btn" href="preview.html" id="backLink">← 返回体检报告</a>
+    <button class="btn" id="btnCopy">复制图片</button>
+    <button class="btn primary" id="btnSave">保存图片</button>
+  </div>
+</header>
+
+<main>
+  <section class="stage">
+    <div class="canvas-wrap"><canvas id="card" width="2160" height="3024" role="img" aria-label="麦麦角色卡"></canvas></div>
+    <div class="hint">
+      1080 × 1512 · 导出 2160 × 3024 PNG（2 倍图）<br>
+      手机端长按卡面同样可保存。
+    </div>
+  </section>
+
+  <aside class="panel">
+    <div class="box">
+      <h2>卡面</h2>
+      <div class="tabs" id="tabs"></div>
+    </div>
+
+    <div class="box">
+      <h2>主题</h2>
+      <div class="swatches" id="swatches"></div>
+      <div class="note">主题随画像自动匹配，也可手动切换；稀有度光晕独立于主题。</div>
+    </div>
+
+    <div class="box">
+      <h2>稀有度</h2>
+      <div class="row">
+        <select id="rarityPick"></select>
+      </div>
+      <div class="legend" id="legend" style="margin-top:12px"></div>
+    </div>
+
+    <div class="box">
+      <h2>数据</h2>
+      <div class="note" id="dataNote" style="margin-top:0"></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn" id="btnLoad" style="background:#fff;color:var(--ink);border-color:var(--line)">载入 card.json</button>
+        <input type="file" id="fileInput" accept=".json,application/json" hidden>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<script>
+/* 构建时由 scripts/render.py 注入；源文件直接打开时为 null。 */
+window.__CARD_DATA__ = /*__CARD_DATA__*/null;
+
+(function () {
+  "use strict";
+
+  var W = 1080, H = 1512, DPR = 2;
+  var PAD = 64, CW = W - PAD * 2, CH = H - PAD * 2, RAD = 46;
+  var IN = PAD + 44, IW = W - IN * 2;
+  var BODY_TOP = 388;
+
+  var F = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif';
+  var FN = '"DIN Alternate","Bebas Neue","HarmonyOS Sans SC","PingFang SC",system-ui,sans-serif';
+  var FE = '"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif';
+
+  var canvas = document.getElementById("card");
+  var ctx = canvas.getContext("2d");
+  canvas.width = W * DPR;
+  canvas.height = H * DPR;
+
+  var DATA = window.__CARD_DATA__;
+  var state = { card: "id", theme: null, rarity: "auto" };
+
+  /* ------------------------------------------------------------------ 基础工具 */
+
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+  function hex2rgb(hex) {
+    var h = String(hex || "#000").replace("#", "");
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    return [parseInt(h.slice(0, 2), 16) || 0, parseInt(h.slice(2, 4), 16) || 0, parseInt(h.slice(4, 6), 16) || 0];
+  }
+  function rgba(hex, a) {
+    var c = hex2rgb(hex);
+    return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
+  }
+  function mix(a, b, t) {
+    var x = hex2rgb(a), y = hex2rgb(b);
+    return "rgb(" + Math.round(x[0] + (y[0] - x[0]) * t) + "," +
+      Math.round(x[1] + (y[1] - x[1]) * t) + "," +
+      Math.round(x[2] + (y[2] - x[2]) * t) + ")";
+  }
+  function lum(hex) {
+    var c = hex2rgb(hex);
+    return (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255;
+  }
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = a + 0x6D2B79F5 | 0;
+      var t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function rrect(x, y, w, h, r) {
+    var rr = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + rr, y);
+    ctx.lineTo(x + w - rr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rr);
+    ctx.lineTo(x + w, y + h - rr);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rr, y + h);
+    ctx.lineTo(x + rr, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rr);
+    ctx.lineTo(x, y + rr);
+    ctx.quadraticCurveTo(x, y, x + rr, y);
+    ctx.closePath();
+  }
+  function fillR(x, y, w, h, r, color) {
+    rrect(x, y, w, h, r); ctx.fillStyle = color; ctx.fill();
+  }
+  function strokeR(x, y, w, h, r, color, lw) {
+    rrect(x, y, w, h, r); ctx.strokeStyle = color; ctx.lineWidth = lw || 1; ctx.stroke();
+  }
+
+  function txt(s, x, y, size, color, weight, align, font) {
+    ctx.font = (weight || 400) + " " + size + "px " + (font || F);
+    ctx.fillStyle = color;
+    ctx.textAlign = align || "left";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText(s == null ? "" : String(s), x, y);
+  }
+  function spaced(s, x, y, size, color, weight, gap, align) {
+    s = String(s == null ? "" : s);
+    ctx.font = (weight || 400) + " " + size + "px " + F;
+    ctx.fillStyle = color;
+    ctx.textBaseline = "alphabetic";
+    var widths = [], total = 0, i;
+    for (i = 0; i < s.length; i++) { widths.push(ctx.measureText(s[i]).width); total += widths[i] + gap; }
+    total -= gap;
+    var cx = align === "center" ? x - total / 2 : align === "right" ? x - total : x;
+    ctx.textAlign = "left";
+    for (i = 0; i < s.length; i++) { ctx.fillText(s[i], cx, y); cx += widths[i] + gap; }
+    return total;
+  }
+  function measure(s, size, weight) {
+    ctx.font = (weight || 400) + " " + size + "px " + F;
+    return ctx.measureText(String(s)).width;
+  }
+
+  var NO_START = "，。、；：？！）】」』%,.!?:;)·";
+  function wrap(s, maxW, size, weight) {
+    s = String(s || "");
+    ctx.font = (weight || 400) + " " + size + "px " + F;
+    var lines = [], cur = "";
+    for (var i = 0; i < s.length; i++) {
+      var ch = s[i];
+      var test = cur + ch;
+      if (ctx.measureText(test).width > maxW && cur) {
+        if (NO_START.indexOf(ch) >= 0) { cur = test; continue; }
+        lines.push(cur); cur = ch;
+      } else { cur = test; }
+    }
+    if (cur) lines.push(cur);
+    return lines.length ? lines : [""];
+  }
+
+  function para(s, x, y, maxW, size, lh, color, weight, align) {
+    var lines = wrap(s, maxW, size, weight);
+    for (var i = 0; i < lines.length; i++) txt(lines[i], x, y + i * lh, size, color, weight, align);
+    return y + (lines.length - 1) * lh;
+  }
+
+  /* ------------------------------------------------------------------ 数据访问 */
+
+  function persona() { return DATA.persona || {}; }
+  function theme() {
+    var list = DATA.themes || [], p = persona();
+    var key = state.theme || DATA.defaultTheme || p.style || "classic";
+    for (var i = 0; i < list.length; i++) if (list[i].key === key) return list[i];
+    return list[0];
+  }
+  function rarity() {
+    var base = persona().rarity || { key: "blue", name: "蓝色品质", tier: "普通", stars: 1, color: "#3B82F6", glow: "#93C5FD" };
+    if (state.rarity === "auto") return base;
+    var lad = DATA.ladder || [];
+    for (var i = 0; i < lad.length; i++) if (lad[i].key === state.rarity) return lad[i];
+    return base;
+  }
+  function cardByName(type) {
+    var list = DATA.cards || [];
+    for (var i = 0; i < list.length; i++) if (list[i].type === type) return list[i];
+    return list[0];
+  }
+  function isDark(t) { return lum(t.ink) > 0.5; }
+  function warnColor(t) { return isDark(t) ? "#FF9E64" : "#E8590C"; }
+  function goodColor(t) { return isDark(t) ? "#5CE1A6" : "#1F9D55"; }
+
+  /* ------------------------------------------------------------------ 背景与光晕 */
+
+  function paintBackground(t, rar) {
+    var g = ctx.createLinearGradient(0, 0, W * 0.35, H);
+    g.addColorStop(0, t.bg1);
+    g.addColorStop(1, t.bg2);
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, W, H);
+
+    // 品质光晕：卡片外围的径向光
+    var strength = 0.30 + (rar.stars - 1) * 0.10;
+    var halo = ctx.createRadialGradient(W / 2, H * 0.40, 90, W / 2, H * 0.40, 880);
+    halo.addColorStop(0, rgba(rar.glow, strength * 0.55));
+    halo.addColorStop(0.42, rgba(rar.color, strength * 0.34));
+    halo.addColorStop(1, rgba(rar.color, 0));
+    ctx.fillStyle = halo;
+    ctx.fillRect(0, 0, W, H);
+
+    paintPattern(t, rar);
+  }
+
+  function paintPattern(t, rar) {
+    var dark = isDark(t);
+    var rnd = mulberry32(persona().seed || 7);
+    var i, x, y;
+
+    if (t.pattern === "seeds") {
+      ctx.save();
+      for (i = 0; i < 90; i++) {
+        x = rnd() * W; y = rnd() * H;
+        if (x > PAD - 20 && x < W - PAD + 20 && y > PAD - 20 && y < H - PAD + 20) continue;
+        ctx.beginPath();
+        ctx.ellipse(x, y, 5.5, 3.4, rnd() * Math.PI, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(t.ink, 0.10);
+        ctx.fill();
+      }
+      ctx.restore();
+    } else if (t.pattern === "stars") {
+      ctx.save();
+      for (i = 0; i < 150; i++) {
+        x = rnd() * W; y = rnd() * H;
+        var a = 0.10 + rnd() * 0.45;
+        ctx.beginPath();
+        ctx.arc(x, y, rnd() * 1.8 + 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(t.accent2, a);
+        ctx.fill();
+      }
+      for (i = 0; i < 7; i++) {
+        x = rnd() * W; y = rnd() * H * 0.9;
+        ctx.strokeStyle = rgba(t.accent2, 0.5);
+        ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(x - 9, y); ctx.lineTo(x + 9, y);
+        ctx.moveTo(x, y - 9); ctx.lineTo(x, y + 9); ctx.stroke();
+      }
+      ctx.restore();
+    } else if (t.pattern === "rule") {
+      ctx.save();
+      ctx.strokeStyle = rgba(t.ink, 0.055);
+      ctx.lineWidth = 1.5;
+      for (y = 210; y < H; y += 36) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+      // 顶部两条胶带
+      ctx.fillStyle = rgba(t.accent, 0.10);
+      ctx.save(); ctx.translate(150, 64); ctx.rotate(-0.18); ctx.fillRect(-80, -22, 160, 44); ctx.restore();
+      ctx.save(); ctx.translate(W - 150, 64); ctx.rotate(0.18); ctx.fillRect(-80, -22, 160, 44); ctx.restore();
+      ctx.restore();
+    } else if (t.pattern === "grid") {
+      ctx.save();
+      ctx.strokeStyle = rgba(t.accent2, 0.07);
+      ctx.lineWidth = 1.4;
+      for (x = 0; x < W; x += 54) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (y = 0; y < H; y += 54) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+      var gl = ctx.createLinearGradient(0, 0, 0, H);
+      gl.addColorStop(0, rgba(t.accent, 0.10));
+      gl.addColorStop(0.5, rgba(t.accent, 0));
+      gl.addColorStop(1, rgba(t.accent2, 0.08));
+      ctx.fillStyle = gl;
+      ctx.fillRect(0, 0, W, H);
+      ctx.restore();
+    } else if (t.pattern === "foil") {
+      ctx.save();
+      ctx.globalAlpha = 0.5;
+      for (i = 0; i < 8; i++) {
+        x = -300 + i * 190 + rnd() * 60;
+        var grad = ctx.createLinearGradient(x, 0, x + 420, H);
+        grad.addColorStop(0, rgba(t.accent2, 0));
+        grad.addColorStop(0.45, rgba(t.accent2, 0.05 + rnd() * 0.05));
+        grad.addColorStop(0.55, rgba(t.accent2, 0));
+        grad.addColorStop(1, rgba(t.accent2, 0));
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(x, 0); ctx.lineTo(x + 260, 0); ctx.lineTo(x + 120, H); ctx.lineTo(x - 140, H);
+        ctx.closePath(); ctx.fill();
+      }
+      for (i = 0; i < 70; i++) {
+        x = rnd() * W; y = rnd() * H;
+        ctx.beginPath();
+        ctx.arc(x, y, rnd() * 1.6 + 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(t.accent2, 0.10 + rnd() * 0.22);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+    if (dark) {
+      var vg = ctx.createRadialGradient(W / 2, H / 2, 380, W / 2, H / 2, 980);
+      vg.addColorStop(0, "rgba(0,0,0,0)");
+      vg.addColorStop(1, "rgba(0,0,0,0.42)");
+      ctx.fillStyle = vg;
+      ctx.fillRect(0, 0, W, H);
+    }
+  }
+
+  function paintSurface(t, rar) {
+    var sg = ctx.createLinearGradient(0, PAD, 0, PAD + CH);
+    sg.addColorStop(0, t.surface);
+    sg.addColorStop(1, t.surface2);
+    fillR(PAD, PAD, CW, CH, RAD, sg);
+
+    // 内描边
+    strokeR(PAD + 1, PAD + 1, CW - 2, CH - 2, RAD - 1, t.line, 2);
+
+    // 稀有度光晕边框：多层 shadowBlur 叠加
+    ctx.save();
+    for (var i = 0; i < 3; i++) {
+      ctx.shadowColor = rgba(rar.color, 0.85);
+      ctx.shadowBlur = 24 + rar.stars * 11 + i * 20;
+      ctx.strokeStyle = rgba(rar.glow, 0.85 - i * 0.24);
+      ctx.lineWidth = 8 - i * 2.4;
+      strokeR(PAD, PAD, CW, CH, RAD, ctx.strokeStyle, ctx.lineWidth);
+    }
+    ctx.restore();
+
+    // 清晰一圈主色边
+    strokeR(PAD + 1, PAD + 1, CW - 2, CH - 2, RAD - 1, rgba(rar.color, 0.9), 2.4);
+
+    // 高稀有度：四角光楔
+    if (rar.stars >= 4) {
+      ctx.save();
+      ctx.globalAlpha = 0.75;
+      var corners = [[PAD, PAD, 1, 1], [W - PAD, PAD, -1, 1], [PAD, H - PAD, 1, -1], [W - PAD, H - PAD, -1, -1]];
+      corners.forEach(function (c) {
+        var g = ctx.createLinearGradient(c[0], c[1], c[0] + 120 * c[2], c[1] + 120 * c[3]);
+        g.addColorStop(0, rgba(rar.glow, 0.55));
+        g.addColorStop(1, rgba(rar.glow, 0));
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.moveTo(c[0], c[1] + 96 * c[3]);
+        ctx.lineTo(c[0], c[1]);
+        ctx.lineTo(c[0] + 96 * c[2], c[1]);
+        ctx.quadraticCurveTo(c[0] + 18 * c[2], c[1] + 18 * c[3], c[0], c[1] + 96 * c[3]);
+        ctx.closePath();
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    // 高稀有度：边框外侧星屑
+    if (rar.stars >= 3) {
+      var rnd = mulberry32((persona().seed || 3) + rar.stars * 97);
+      ctx.save();
+      for (var k = 0; k < 14 + rar.stars * 4; k++) {
+        var edge = Math.floor(rnd() * 4);
+        var px, py;
+        if (edge === 0) { px = PAD + rnd() * CW; py = PAD - 10 - rnd() * 8; }
+        else if (edge === 1) { px = PAD + rnd() * CW; py = H - PAD + 10 + rnd() * 8; }
+        else if (edge === 2) { px = PAD - 10 - rnd() * 8; py = PAD + rnd() * CH; }
+        else { px = W - PAD + 10 + rnd() * 8; py = PAD + rnd() * CH; }
+        star(px, py, 2 + rnd() * 5, rgba(rar.glow, 0.35 + rnd() * 0.45));
+      }
+      ctx.restore();
+    }
+
+    // 金/红：斜向高光带
+    if (rar.stars >= 4) {
+      ctx.save();
+      rrect(PAD, PAD, CW, CH, RAD); ctx.clip();
+      var sh = ctx.createLinearGradient(PAD, PAD, PAD + 520, PAD + 900);
+      sh.addColorStop(0, rgba(rar.glow, 0));
+      sh.addColorStop(0.5, rgba(rar.glow, 0.07));
+      sh.addColorStop(1, rgba(rar.glow, 0));
+      ctx.fillStyle = sh;
+      ctx.fillRect(PAD, PAD, CW, CH);
+      ctx.restore();
+    }
+  }
+
+  function star(x, y, r, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x, y - r);
+    ctx.quadraticCurveTo(x + r * 0.18, y - r * 0.18, x + r, y);
+    ctx.quadraticCurveTo(x + r * 0.18, y + r * 0.18, x, y + r);
+    ctx.quadraticCurveTo(x - r * 0.18, y + r * 0.18, x - r, y);
+    ctx.quadraticCurveTo(x - r * 0.18, y - r * 0.18, x, y - r);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  /* ------------------------------------------------------------------ 角色绘制 */
+
+  function drawHead(R, look, t) {
+    var hair = look.hair, hc = look.hairColor, skin = look.skin;
+    var acc = look.accessory, expr = look.expression;
+    var line = mix(hc, "#000000", 0.45);
+    var top = -R * 1.72;
+
+    // 后发
+    ctx.save();
+    ctx.fillStyle = hc;
+    if (hair === "bob") {
+      ctx.beginPath(); ctx.ellipse(0, 16, R * 1.05, R * 1.10, 0, 0, Math.PI * 2); ctx.fill();
+    } else if (hair === "twin") {
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath(); ctx.ellipse(s * R * 1.12, 34, R * 0.34, R * 0.52, s * 0.16, 0, Math.PI * 2); ctx.fill();
+      });
+    } else if (hair === "ponytail") {
+      ctx.beginPath(); ctx.ellipse(R * 1.06, 42, R * 0.26, R * 0.58, 0.24, 0, Math.PI * 2); ctx.fill();
+    } else if (hair === "bun") {
+      ctx.beginPath(); ctx.arc(0, -R * 1.06, R * 0.40, 0, Math.PI * 2); ctx.fill();
+    } else if (hair === "messy") {
+      ctx.beginPath(); ctx.ellipse(0, -R * 0.05, R * 1.15, R * 1.14, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+
+    // 耳朵
+    ctx.fillStyle = skin;
+    ctx.beginPath(); ctx.arc(-R * 0.99, 10, R * 0.13, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(R * 0.99, 10, R * 0.13, 0, Math.PI * 2); ctx.fill();
+
+    // 脸
+    ctx.beginPath(); ctx.arc(0, 0, R, 0, Math.PI * 2);
+    ctx.fillStyle = skin; ctx.fill();
+
+    // 前发：顶部圆顶 + 分型发梢
+    ctx.fillStyle = hc;
+    ctx.beginPath();
+    ctx.moveTo(-R * 1.0, -R * 0.10);
+    ctx.bezierCurveTo(-R * 1.09, top, R * 1.09, top, R * 1.0, -R * 0.10);
+    if (hair === "short") {
+      ctx.lineTo(R * 0.72, -R * 0.34);
+      ctx.lineTo(R * 0.50, -R * 0.12);
+      ctx.lineTo(R * 0.20, -R * 0.38);
+      ctx.lineTo(-R * 0.10, -R * 0.14);
+      ctx.lineTo(-R * 0.44, -R * 0.38);
+      ctx.lineTo(-R * 0.70, -R * 0.16);
+    } else if (hair === "messy") {
+      ctx.lineTo(R * 0.80, -R * 0.36);
+      ctx.lineTo(R * 0.58, -R * 0.10);
+      ctx.lineTo(R * 0.30, -R * 0.42);
+      ctx.lineTo(R * 0.02, -R * 0.16);
+      ctx.lineTo(-R * 0.26, -R * 0.44);
+      ctx.lineTo(-R * 0.54, -R * 0.14);
+      ctx.lineTo(-R * 0.80, -R * 0.34);
+    } else if (hair === "twin" || hair === "bun" || hair === "ponytail") {
+      ctx.lineTo(R * 0.66, -R * 0.30);
+      ctx.quadraticCurveTo(R * 0.34, -R * 0.04, R * 0.10, -R * 0.30);
+      ctx.quadraticCurveTo(-R * 0.18, -R * 0.02, -R * 0.52, -R * 0.32);
+    } else { // bob
+      ctx.lineTo(R * 0.66, -R * 0.44);
+      ctx.quadraticCurveTo(R * 0.32, -R * 0.12, R * 0.06, -R * 0.32);
+      ctx.quadraticCurveTo(-R * 0.24, -R * 0.10, -R * 0.60, -R * 0.40);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.save();
+    ctx.globalAlpha = 0.32;
+    ctx.strokeStyle = mix(hc, "#000000", 0.40);
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+    ctx.restore();
+    ctx.save();
+    ctx.strokeStyle = "rgba(255,255,255,0.15)";
+    ctx.lineWidth = R * 0.05;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.arc(R * 0.06, -R * 0.18, R * 0.78, Math.PI * 1.16, Math.PI * 1.42);
+    ctx.stroke();
+    ctx.restore();
+
+    // 鬓发
+    if (hair === "bob" || hair === "ponytail" || hair === "twin") {
+      ctx.fillStyle = hc;
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath();
+        ctx.moveTo(s * R * 0.99, -R * 0.22);
+        ctx.quadraticCurveTo(s * R * 1.11, R * 0.12, s * R * 1.00, R * 0.40);
+        ctx.quadraticCurveTo(s * R * 0.88, R * 0.16, s * R * 0.86, -R * 0.14);
+        ctx.closePath(); ctx.fill();
+      });
+    }
+
+    // 眉毛
+    ctx.strokeStyle = line; ctx.lineWidth = 6.5; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-R * 0.53, -R * 0.35); ctx.quadraticCurveTo(-R * 0.40, -R * 0.43, -R * 0.25, -R * 0.35); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(R * 0.25, -R * 0.35); ctx.quadraticCurveTo(R * 0.40, -R * 0.43, R * 0.53, -R * 0.35); ctx.stroke();
+
+    // 眼睛
+    var ex = R * 0.39, ey = R * 0.10;
+    var dark = "#2B2430";
+    if (expr === "gentle") {
+      ctx.strokeStyle = dark; ctx.lineWidth = 8;
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath();
+        ctx.arc(s * ex, ey + 6, R * 0.16, Math.PI * 1.12, Math.PI * 1.88);
+        ctx.stroke();
+      });
+    } else if (expr === "sleepy") {
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath();
+        ctx.ellipse(s * ex, ey + 2, R * 0.16, R * 0.15, 0, 0, Math.PI);
+        ctx.fillStyle = dark; ctx.fill();
+        ctx.strokeStyle = dark; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.moveTo(s * ex - R * 0.17, ey - 3); ctx.lineTo(s * ex + R * 0.17, ey - 3); ctx.stroke();
+      });
+    } else {
+      var ry = expr === "cool" ? R * 0.12 : R * 0.195;
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath(); ctx.ellipse(s * ex, ey, R * 0.145, ry, 0, 0, Math.PI * 2);
+        ctx.fillStyle = dark; ctx.fill();
+        if (expr === "energetic") {
+          star(s * ex + R * 0.04, ey - R * 0.06, R * 0.08, "#FFFFFF");
+          star(s * ex - R * 0.05, ey + R * 0.07, R * 0.038, "#FFFFFF");
+        } else {
+          ctx.beginPath(); ctx.arc(s * ex + R * 0.045, ey - R * 0.07, R * 0.055, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.fill();
+          ctx.beginPath(); ctx.arc(s * ex - R * 0.05, ey + R * 0.06, R * 0.026, 0, Math.PI * 2);
+          ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.fill();
+        }
+      });
+      if (expr === "cool") {
+        ctx.strokeStyle = line; ctx.lineWidth = 5;
+        [-1, 1].forEach(function (s) {
+          ctx.beginPath();
+          ctx.moveTo(s * ex - R * 0.16, ey - R * 0.11);
+          ctx.lineTo(s * ex + R * 0.16, ey - R * 0.14);
+          ctx.stroke();
+        });
+      }
+    }
+
+    // 腮红
+    ctx.fillStyle = "rgba(240,116,116,0.28)";
+    ctx.beginPath(); ctx.ellipse(-R * 0.68, R * 0.44, R * 0.18, R * 0.11, 0, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(R * 0.68, R * 0.44, R * 0.18, R * 0.11, 0, 0, Math.PI * 2); ctx.fill();
+
+    // 嘴
+    ctx.strokeStyle = "#8C3B34"; ctx.lineWidth = 6; ctx.lineCap = "round";
+    if (expr === "energetic") {
+      ctx.beginPath(); ctx.ellipse(0, R * 0.52, R * 0.14, R * 0.13, 0, 0, Math.PI * 2);
+      ctx.fillStyle = "#B4504A"; ctx.fill();
+      ctx.beginPath(); ctx.ellipse(0, R * 0.57, R * 0.07, R * 0.05, 0, 0, Math.PI * 2);
+      ctx.fillStyle = "#F09A93"; ctx.fill();
+    } else if (expr === "cool") {
+      ctx.beginPath(); ctx.moveTo(-R * 0.10, R * 0.52); ctx.lineTo(R * 0.12, R * 0.49); ctx.stroke();
+    } else if (expr === "sleepy") {
+      ctx.beginPath(); ctx.moveTo(-R * 0.09, R * 0.50); ctx.quadraticCurveTo(0, R * 0.58, R * 0.09, R * 0.50); ctx.stroke();
+    } else {
+      ctx.beginPath(); ctx.arc(0, R * 0.42, R * 0.14, Math.PI * 0.18, Math.PI * 0.82); ctx.stroke();
+    }
+
+    // 配饰
+    if (acc === "headset") {
+      ctx.strokeStyle = mix(t.accent, "#000000", 0.05); ctx.lineWidth = 12;
+      ctx.beginPath(); ctx.arc(0, 0, R * 1.16, Math.PI * 1.10, Math.PI * 1.90); ctx.stroke();
+      [-1, 1].forEach(function (s) {
+        fillR(s * R * 1.14 - R * 0.16, -R * 0.08, R * 0.32, R * 0.40, R * 0.13, t.accent);
+        fillR(s * R * 1.14 - R * 0.085, R * 0.04, R * 0.17, R * 0.17, R * 0.085, mix(t.accent2, "#000000", 0.1));
+      });
+    } else if (acc === "glasses") {
+      ctx.strokeStyle = "#3A3444"; ctx.lineWidth = 6;
+      [-1, 1].forEach(function (s) {
+        ctx.beginPath(); ctx.arc(s * ex, ey, R * 0.245, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = "rgba(255,255,255,0.12)";
+        ctx.beginPath(); ctx.arc(s * ex, ey, R * 0.245, 0, Math.PI * 2); ctx.fill();
+      });
+      ctx.beginPath(); ctx.moveTo(-R * 0.145, ey - 2); ctx.lineTo(R * 0.145, ey - 2); ctx.stroke();
+    } else if (acc === "cap") {
+      ctx.fillStyle = t.accent;
+      ctx.beginPath(); ctx.arc(0, -R * 0.06, R * 1.06, Math.PI * 1.04, Math.PI * 1.96); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(R * 0.10, -R * 0.30, R * 1.02, R * 0.20, 0.04, 0, Math.PI); ctx.fill();
+      ctx.fillStyle = rgba("#ffffff", 0.40);
+      ctx.beginPath(); ctx.arc(0, -R * 0.08, R * 0.17, 0, Math.PI * 2); ctx.fill();
+    } else if (acc === "ribbon") {
+      var bx = -R * 0.74, by = -R * 0.92;
+      ctx.fillStyle = t.accent2;
+      ctx.beginPath();
+      ctx.moveTo(bx, by); ctx.lineTo(bx - R * 0.30, by - R * 0.16);
+      ctx.lineTo(bx - R * 0.26, by + R * 0.18); ctx.closePath(); ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(bx, by); ctx.lineTo(bx + R * 0.30, by - R * 0.16);
+      ctx.lineTo(bx + R * 0.26, by + R * 0.18); ctx.closePath(); ctx.fill();
+      ctx.beginPath(); ctx.arc(bx, by, R * 0.10, 0, Math.PI * 2); ctx.fillStyle = t.accent; ctx.fill();
+    }
+  }
+
+  function drawProp(kind, x, y, s, t) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    if (kind === "burger") {
+      ctx.fillStyle = "#E8A33D";
+      ctx.beginPath(); ctx.ellipse(0, 26, 46, 14, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#8B4A2B";
+      rrect(-46, 6, 92, 18, 7); ctx.fill();
+      ctx.fillStyle = "#5FA855";
+      ctx.beginPath();
+      ctx.moveTo(-48, 4);
+      for (var i = 0; i < 6; i++) {
+        ctx.quadraticCurveTo(-48 + i * 16 + 8, i % 2 ? -2 : 8, -48 + (i + 1) * 16, 4);
+      }
+      ctx.lineTo(48, 8); ctx.lineTo(-48, 8); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#F0B860";
+      ctx.beginPath(); ctx.ellipse(0, -18, 48, 30, 0, Math.PI, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#FFF0CF";
+      [[-22, -26], [-4, -34], [16, -26], [30, -18], [-30, -14], [6, -14]].forEach(function (p) {
+        ctx.beginPath(); ctx.ellipse(p[0], p[1], 4.4, 2.8, 0.3, 0, Math.PI * 2); ctx.fill();
+      });
+    } else if (kind === "fries") {
+      ctx.fillStyle = "#E9BE4A";
+      [-26, -14, 0, 13, 26].forEach(function (dx, i) {
+        rrect(dx - 6, -52 + (i % 2) * 6, 12, 46, 4); ctx.fill();
+      });
+      ctx.fillStyle = "#D0342C";
+      ctx.beginPath();
+      ctx.moveTo(-34, -14); ctx.lineTo(34, -14);
+      ctx.lineTo(26, 40); ctx.lineTo(-26, 40); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#FFC72C";
+      ctx.beginPath(); ctx.ellipse(0, 4, 13, 13, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#D0342C";
+      ctx.font = "700 17px " + F; ctx.textAlign = "center";
+      ctx.fillText("M", 0, 10);
+    } else if (kind === "cup") {
+      ctx.fillStyle = "#F2F2F2";
+      ctx.beginPath();
+      ctx.moveTo(-30, -26); ctx.lineTo(30, -26);
+      ctx.lineTo(22, 42); ctx.lineTo(-22, 42); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#D0342C";
+      rrect(-32, -34, 64, 12, 5); ctx.fill();
+      ctx.strokeStyle = "#D0342C"; ctx.lineWidth = 7; ctx.lineCap = "round";
+      ctx.beginPath(); ctx.moveTo(6, -34); ctx.lineTo(16, -62); ctx.stroke();
+      ctx.fillStyle = "rgba(0,0,0,0.06)";
+      ctx.beginPath(); ctx.ellipse(0, 42, 22, 6, 0, 0, Math.PI * 2); ctx.fill();
+    } else if (kind === "sundae") {
+      ctx.fillStyle = "#EFE6D6";
+      ctx.beginPath();
+      ctx.moveTo(-26, -8); ctx.lineTo(26, -8);
+      ctx.lineTo(18, 40); ctx.lineTo(-18, 40); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#FFF7EA";
+      ctx.beginPath(); ctx.arc(0, -18, 22, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -38, 17, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -54, 11, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = "#D0342C";
+      ctx.beginPath(); ctx.arc(0, -64, 7, 0, Math.PI * 2); ctx.fill();
+    } else if (kind === "nuggets") {
+      ctx.fillStyle = "#C8402F";
+      ctx.beginPath();
+      ctx.moveTo(-40, -6); ctx.lineTo(40, -6);
+      ctx.lineTo(32, 40); ctx.lineTo(-32, 40); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = "#E9BE4A";
+      [[-18, -22], [4, -28], [22, -16]].forEach(function (p) {
+        ctx.beginPath(); ctx.ellipse(p[0], p[1], 15, 12, 0.3, 0, Math.PI * 2); ctx.fill();
+      });
+    } else if (kind === "pie") {
+      ctx.fillStyle = "#E7C083";
+      ctx.beginPath();
+      ctx.moveTo(0, -40); ctx.quadraticCurveTo(48, -6, 40, 26);
+      ctx.quadraticCurveTo(0, 40, -40, 26); ctx.quadraticCurveTo(-48, -6, 0, -40);
+      ctx.fill();
+      ctx.fillStyle = "rgba(180,120,60,0.35)";
+      ctx.beginPath(); ctx.ellipse(0, 6, 26, 10, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  function drawCharacter(cx, groundY, s, look, t) {
+    var outfit = look.outfit;
+    var pants = mix(outfit, "#2A2530", 0.62);
+    var shoe = mix("#2A2530", "#FFFFFF", 0.06);
+    var R = 118;
+
+    ctx.save();
+    ctx.translate(cx, groundY);
+    ctx.scale(s, s);
+
+    // 地面投影
+    ctx.fillStyle = "rgba(0,0,0,0.12)";
+    ctx.beginPath(); ctx.ellipse(0, 2, 108, 20, 0, 0, Math.PI * 2); ctx.fill();
+
+    // 腿
+    ctx.fillStyle = pants;
+    rrect(-50, -112, 40, 104, 18); ctx.fill();
+    rrect(10, -112, 40, 104, 18); ctx.fill();
+    // 鞋
+    ctx.fillStyle = shoe;
+    rrect(-56, -26, 50, 26, 12); ctx.fill();
+    rrect(6, -26, 50, 26, 12); ctx.fill();
+
+    // 脖子
+    ctx.fillStyle = mix(look.skin, "#000000", 0.10);
+    rrect(-23, -266, 46, 46, 12); ctx.fill();
+
+    // 身体
+    ctx.fillStyle = outfit;
+    ctx.beginPath();
+    ctx.moveTo(-66, -246);
+    ctx.quadraticCurveTo(-78, -190, -70, -108);
+    ctx.quadraticCurveTo(0, -92, 70, -108);
+    ctx.quadraticCurveTo(78, -190, 66, -246);
+    ctx.quadraticCurveTo(0, -262, -66, -246);
+    ctx.closePath(); ctx.fill();
+
+    // 帽衫口袋 + 领口
+    ctx.fillStyle = rgba("#000000", 0.10);
+    rrect(-34, -168, 68, 34, 14); ctx.fill();
+    ctx.strokeStyle = rgba("#ffffff", 0.45); ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(-30, -238); ctx.quadraticCurveTo(0, -222, 30, -238); ctx.stroke();
+
+    // 手臂
+    ctx.strokeStyle = mix(outfit, "#000000", 0.10); ctx.lineWidth = 36; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(-58, -230); ctx.quadraticCurveTo(-100, -188, -92, -144); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(58, -230); ctx.quadraticCurveTo(100, -192, 98, -152); ctx.stroke();
+
+    // 道具（在右手之后画手，形成「握住」）
+    drawProp(look.prop, 118, -166, 1.0, t);
+
+    // 手
+    ctx.fillStyle = look.skin;
+    ctx.beginPath(); ctx.arc(-94, -140, 17, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(106, -150, 17, 0, Math.PI * 2); ctx.fill();
+
+    // 头
+    ctx.save();
+    ctx.translate(0, -352);
+    drawHead(R, look, t);
+    ctx.restore();
+
+    ctx.restore();
+  }
+
+  function drawAvatar(cx, cy, r, look, t) {
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+    var g = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+    g.addColorStop(0, rgba(t.accent, 0.22));
+    g.addColorStop(1, rgba(t.accent2, 0.30));
+    ctx.fillStyle = g; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+    ctx.translate(cx, cy + r * 0.62);
+    ctx.scale(r / 132, r / 132);
+    drawHead(118, look, t);
+    ctx.restore();
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = rgba(t.ink, 0.14); ctx.lineWidth = 3; ctx.stroke();
+  }
+
+  /* ------------------------------------------------------------------ 页眉 / 页脚 */
+
+  function drawHeader(t, rar, card) {
+    fillR(IN, 112, 46, 46, 14, t.accent);
+    txt("M", IN + 23, 145, 27, isDark(t) ? "#10202B" : "#FFFFFF", 800, "center");
+
+    txt("麦麦体检报告", IN + 62, 136, 25, t.ink, 700);
+    spaced("MCD CHECKUP · " + card.en, IN + 62, 160, 13, t.ink3, 600, 2.4);
+
+    // 稀有度徽标
+    var label = rar.name;
+    var starsTxt = "";
+    for (var i = 0; i < 5; i++) starsTxt += i < rar.stars ? "★" : "☆";
+    var wStars = measure(starsTxt, 13, 400);
+    var wLabel = measure(label, 18, 700);
+    var w = wStars + wLabel + 46;
+    var x = W - IN - w, y = 112, h = 46;
+
+    fillR(x, y, w, h, 23, rgba(rar.color, 0.16));
+    strokeR(x, y, w, h, 23, rgba(rar.color, 0.55), 1.6);
+    txt(starsTxt, x + 20, y + 29, 13, rar.color, 400);
+    txt(label, x + 26 + wStars, y + 30, 18, t.ink, 700);
+  }
+
+  function drawFooter(t, card) {
+    var p = persona();
+    var dividerY = H - PAD - 96;
+    ctx.strokeStyle = t.line; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(IN, dividerY); ctx.lineTo(W - IN, dividerY); ctx.stroke();
+
+    spaced(card.en + " · " + (p.cardNo || "MCD-0000-0000"), IN, H - PAD - 58, 12.5, t.ink3, 600, 1.6);
+
+    var right = "麦当劳 MCP · 只读数据";
+    if (DATA.meta && DATA.meta.mode === "sample") right += " · 演示数据";
+    txt(right, W - IN, H - PAD - 58, 13, t.ink3, 500, "right");
+
+    // 品质小点
+    ctx.beginPath(); ctx.arc(W - IN - 6, dividerY + 18, 3.6, 0, Math.PI * 2);
+    ctx.fillStyle = rgba(rarity().color, 0.75);
+    ctx.fill();
+  }
+
+  /* ------------------------------------------------------------------ 区块渲染 */
+
+  function blockAttrs(b, y, t) {
+    var padX = IN, barX = IN + 100, barW = 404, valX = IN + 620;
+    spaced((b.title || "五维"), padX, y + 22, 13, t.ink3, 700, 2.2);
+    var cy = y + 30;
+    (b.items || []).forEach(function (a, i) {
+      var ry = cy + i * 46;
+      txt(a.key, padX, ry + 28, 26, t.ink, 700);
+      // 轨道
+      fillR(barX, ry + 14, barW, 12, 6, rgba(t.ink, 0.08));
+      var v = clamp(a.value || 0, 0, 100);
+      var g = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+      g.addColorStop(0, t.accent);
+      g.addColorStop(1, t.accent2);
+      rrect(barX, ry + 14, Math.max(12, barW * v / 100), 12, 6);
+      ctx.fillStyle = g; ctx.fill();
+      txt(String(Math.round(a.value)), valX, ry + 29, 26, t.ink, 700, "right");
+      txt(a.tone || "", valX + 22, ry + 28, 16, t.ink3, 700);
+      txt(a.note || "", valX + 52, ry + 28, 17, t.ink3, 400);
+    });
+    return cy + (b.items || []).length * 46;
+  }
+
+  function blockNote(b, y, t) {
+    var tone = b.tone === "warn" ? warnColor(t) : b.tone === "good" ? goodColor(t) : t.accent;
+    var lines = wrap(b.text || "", IW - 48, 20, 500);
+    var h = lines.length * 30 + 34;
+    fillR(IN, y, IW, h, 14, rgba(tone, isDark(t) ? 0.14 : 0.09));
+    fillR(IN, y + 12, 4, h - 24, 2, tone);
+    lines.forEach(function (ln, i) {
+      txt(ln, IN + 26, y + 30 + i * 30, 20, t.ink, 500);
+    });
+    return y + h;
+  }
+
+  function blockMetrics(b, y, t) {
+    var items = b.items || [];
+    if (!items.length) return y;
+    var gap = 20;
+    if (items.length >= 3 && items[0].size === "xl") {
+      var big = items[0], rest = items.slice(1);
+      tile(big, IN, y, IW, 184, t, true);
+      var w = (IW - gap * (rest.length - 1)) / rest.length;
+      rest.forEach(function (it, i) { tile(it, IN + i * (w + gap), y + 204, w, 164, t, false); });
+      return y + 204 + 164;
+    }
+    var cw = (IW - gap * (items.length - 1)) / items.length;
+    items.forEach(function (it, i) { tile(it, IN + i * (cw + gap), y, cw, 190, t, false); });
+    return y + 190;
+  }
+
+  function tile(it, x, y, w, h, t, big) {
+    fillR(x, y, w, h, 20, rgba(t.ink, 0.045));
+    strokeR(x, y, w, h, 20, t.line, 1.4);
+    // 左侧品质色细条
+    fillR(x, y + 22, 4, h - 44, 2, rgba(t.accent, 0.65));
+
+    txt(it.k, x + 24, y + (big ? 46 : 40), big ? 21 : 19, t.ink3, 600);
+    var vsize = big ? 74 : (it.size === "sm" ? 30 : 48);
+    var color = it.tone === "warn" ? warnColor(t) : it.tone === "good" ? goodColor(t) : t.ink;
+    var vw = txt(it.v, x + 24, y + (big ? 130 : 106), vsize, color, 750, "left", FN);
+    if (it.unit) txt(it.unit, x + 24 + vw + 8, y + (big ? 128 : 104), 20, t.ink3, 500);
+    if (it.note) txt(it.note, x + 24, y + h - 22, 16.5, t.ink2, 400);
+  }
+
+  function blockList(b, y, t) {
+    spaced((b.title || ""), IN, y + 20, 13, t.ink3, 700, 2.2);
+    var cy = y + 34;
+    var items = b.items || [];
+    if (!items.length) {
+      txt(b.empty || "暂无数据", IN, cy + 34, 22, t.ink3, 400);
+      return cy + 60;
+    }
+    items.forEach(function (it, i) {
+      var ry = cy + i * 82;
+      fillR(IN, ry, IW, 70, 16, rgba(t.ink, 0.035));
+      // 序号
+      ctx.beginPath(); ctx.arc(IN + 44, ry + 35, 20, 0, Math.PI * 2);
+      ctx.fillStyle = i === 0 ? t.accent : rgba(t.ink, 0.09); ctx.fill();
+      txt(String(it.rank || i + 1), IN + 44, ry + 42, 19, i === 0 ? (isDark(t) ? "#111" : "#fff") : t.ink2, 800, "center");
+
+      txt(it.name, IN + 82, ry + 34, 26, t.ink, 650);
+      txt(it.note || "", IN + 82, ry + 58, 15.5, t.ink3, 400);
+      txt(it.value || "", W - IN - 20, ry + 42, 25, t.ink, 750, "right", FN);
+    });
+    return cy + items.length * 82;
+  }
+
+  function blockFacts(b, y, t) {
+    var items = b.items || [];
+    if (b.title) spaced(b.title, IN, y + 20, 13, t.ink3, 700, 2.2);
+    var cy = y + (b.title ? 32 : 8);
+    items.forEach(function (row, i) {
+      var ry = cy + i * 52;
+      if (i) {
+        ctx.strokeStyle = t.line; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(IN, ry); ctx.lineTo(W - IN, ry); ctx.stroke();
+      }
+      txt(row[0], IN, ry + 34, 21, t.ink2, 500);
+      txt(row[1], W - IN, ry + 34, 22, t.ink, 650, "right");
+    });
+    return cy + items.length * 52;
+  }
+
+  function blockProgress(b, y, t) {
+    var total = b.total || 1, val = b.value || 0;
+    var h = 104;
+    spaced(b.title || "收集进度", IN, y + 20, 13, t.ink3, 700, 2.2);
+    txt(val + " / " + total, W - IN, y + 24, 22, t.ink, 700, "right", FN);
+    fillR(IN, y + 42, IW, 16, 8, rgba(t.ink, 0.08));
+    var g = ctx.createLinearGradient(IN, 0, IN + IW, 0);
+    g.addColorStop(0, t.accent);
+    g.addColorStop(1, t.accent2);
+    rrect(IN, y + 42, Math.max(16, IW * clamp(val / total, 0, 1)), 16, 8);
+    ctx.fillStyle = g; ctx.fill();
+    if (b.note) txt(b.note, IN, y + 90, 17, t.ink3, 400);
+    return y + h;
+  }
+
+  function blockHour24(b, y, t) {
+    var series = b.series || [];
+    var H0 = 300;
+    spaced(b.title || "", IN, y + 20, 13, t.ink3, 700, 2.2);
+    var chartY = y + 48, chartH = H0 - 72;
+    var max = Math.max.apply(null, series.concat([1]));
+    var slot = IW / 24, bw = Math.min(24, slot * 0.62);
+
+    // 基线 + 网格
+    ctx.strokeStyle = t.line; ctx.lineWidth = 1;
+    [0, 0.5, 1].forEach(function (g) {
+      var gy = chartY + chartH * (1 - g);
+      ctx.beginPath(); ctx.moveTo(IN, gy); ctx.lineTo(W - IN, gy); ctx.stroke();
+    });
+
+    var peak = 0;
+    series.forEach(function (v, i) { if (v > series[peak]) peak = i; });
+
+    series.forEach(function (v, i) {
+      var h = max ? v / max * chartH : 0;
+      var x = IN + i * slot + (slot - bw) / 2;
+      var night = i >= (b.nightFrom || 22) || i < (b.nightTo || 5);
+      var col = night ? warnColor(t) : rgba(t.accent, 0.85);
+      if (!v) col = rgba(t.ink, 0.10);
+      fillR(x, chartY + chartH - Math.max(h, v ? 4 : 3), bw, Math.max(h, v ? 4 : 3), bw / 2.4, col);
+      if (i === peak && v) {
+        txt(String(v), x + bw / 2, chartY + chartH - h - 10, 15, t.ink2, 700, "center");
+      }
+      if (i % 6 === 0) {
+        txt((i < 10 ? "0" : "") + i, x + bw / 2, chartY + chartH + 26, 13, t.ink3, 500, "center", FN);
+      }
+    });
+    txt("23", W - IN - 6, chartY + chartH + 26, 13, t.ink3, 500, "right", FN);
+    return y + H0;
+  }
+
+  function blockWeek(b, y, t) {
+    var series = b.series || [], labels = b.labels || [];
+    var H0 = 210;
+    spaced(b.title || "", IN, y + 20, 13, t.ink3, 700, 2.2);
+    var chartY = y + 50, chartH = H0 - 84;
+    var max = Math.max.apply(null, series.concat([1]));
+    var slot = IW / 7, bw = 52;
+    series.forEach(function (v, i) {
+      var h = v / max * chartH;
+      var x = IN + i * slot + (slot - bw) / 2;
+      fillR(x, chartY + chartH - h, bw, Math.max(h, 3), 10, i >= 5 ? rgba(t.accent2, 0.95) : rgba(t.accent, 0.80));
+      txt(String(v), x + bw / 2, chartY + chartH - h - 9, 14, t.ink3, 600, "center", FN);
+      txt(labels[i] || "", x + bw / 2, chartY + chartH + 28, 15, t.ink3, 500, "center");
+    });
+    return y + H0;
+  }
+
+  function blockGauge(b, y, t) {
+    var H0 = 200;
+    var cx = IN + 132, cy = y + 146, r = 94;
+    var track = isDark(t) ? 0.12 : 0.08;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = rgba(t.ink, track); ctx.lineWidth = 26;
+    ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, Math.PI * 2); ctx.stroke();
+
+    var frac = clamp((b.value || 0) / 100, 0, 1);
+    ctx.strokeStyle = b.tone === "warn" ? warnColor(t) : goodColor(t);
+    ctx.lineWidth = 26;
+    ctx.beginPath(); ctx.arc(cx, cy, r, Math.PI, Math.PI + Math.PI * frac); ctx.stroke();
+
+    txt((b.value || 0).toFixed(1) + "%", cx, cy - 8, 46, t.ink, 750, "center", FN);
+    txt(b.label || "", cx, cy + 26, 16, t.ink3, 600, "center");
+
+    var tx = IN + 300;
+    txt("积分损耗", tx, y + 104, 24, t.ink, 700);
+    para(b.note || "", tx, y + 140, IW - 300, 20, 30, t.ink2, 400);
+    return y + H0;
+  }
+
+  function blockBadges(b, y, t) {
+    var items = b.items || [];
+    var cols = 5, cw = IW / cols, cellH = 188;
+    items.forEach(function (it, i) {
+      var cx = IN + (i % cols) * cw + cw / 2;
+      var cy = y + Math.floor(i / cols) * cellH + 62;
+      if (it.unlocked) {
+        var g = ctx.createRadialGradient(cx, cy - 12, 6, cx, cy, 62);
+        g.addColorStop(0, rgba(t.accent2, 0.55));
+        g.addColorStop(1, rgba(t.accent, 0.16));
+        ctx.beginPath(); ctx.arc(cx, cy, 58, 0, Math.PI * 2); ctx.fillStyle = g; ctx.fill();
+        ctx.beginPath(); ctx.arc(cx, cy, 60, 0, Math.PI * 2);
+        ctx.strokeStyle = rgba(t.accent, 0.75); ctx.lineWidth = 2.6; ctx.stroke();
+      } else {
+        ctx.beginPath(); ctx.arc(cx, cy, 58, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(t.ink, 0.04); ctx.fill();
+        ctx.setLineDash([5, 7]);
+        ctx.strokeStyle = rgba(t.ink, 0.16); ctx.lineWidth = 2; ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      ctx.save();
+      ctx.globalAlpha = it.unlocked ? 1 : 0.22;
+      ctx.font = "50px " + FE; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(it.icon || "★", cx, cy + 2);
+      ctx.restore();
+      ctx.textBaseline = "alphabetic";
+      txt(it.name, cx, cy + 94, 18, it.unlocked ? t.ink : t.ink3, it.unlocked ? 650 : 400, "center");
+    });
+    return y + Math.ceil(items.length / cols) * cellH - 14;
+  }
+
+  function blockTags(b, y, t) {
+    spaced(b.title || "", IN, y + 20, 13, t.ink3, 700, 2.2);
+    var cy = y + 36, cx = IN, rowH = 46;
+    var items = b.items || [];
+    if (!items.length) {
+      txt(b.empty || "暂无", IN, cy + 24, 19, t.ink3, 400);
+      return cy + 40;
+    }
+    var h = 0;
+    items.forEach(function (s) {
+      var w = measure(s, 17, 500) + 34;
+      if (cx + w > W - IN) { cx = IN; cy += rowH; }
+      fillR(cx, cy, w, 38, 19, rgba(t.accent, 0.10));
+      strokeR(cx, cy, w, 38, 19, rgba(t.accent, 0.28), 1.2);
+      txt(s, cx + 17, cy + 26, 17, t.ink2, 500);
+      cx += w + 10;
+      h = cy;
+    });
+    return h + 48;
+  }
+
+  function blockQuote(b, y, t) {
+    var qx = IN;
+    txt("“", qx - 6, y + 52, 76, rgba(t.accent, 0.45), 800, "left", "Georgia,serif");
+    var endY = para(b.text, qx + 46, y + 40, IW - 60, 27, 42, t.ink, 500);
+    if (b.slogan) {
+      var ty = endY + 34;
+      var w = measure(b.slogan, 19, 700) + 40;
+      fillR(qx + 46, ty - 28, w, 40, 20, t.accent);
+      txt(b.slogan, qx + 46 + w / 2, ty - 1, 19, isDark(t) ? "#111318" : "#FFFFFF", 700, "center");
+      return ty + 22;
+    }
+    return endY + 12;
+  }
+
+  function renderBlocks(blocks, y, t) {
+    blocks.forEach(function (b) {
+      var next;
+      switch (b.kind) {
+        case "attrs": next = blockAttrs(b, y, t); break;
+        case "metrics": next = blockMetrics(b, y, t); break;
+        case "list": next = blockList(b, y, t); break;
+        case "facts": next = blockFacts(b, y, t); break;
+        case "hour24": next = blockHour24(b, y, t); break;
+        case "week": next = blockWeek(b, y, t); break;
+        case "gauge": next = blockGauge(b, y, t); break;
+        case "badges": next = blockBadges(b, y, t); break;
+        case "progress": next = blockProgress(b, y, t); break;
+        case "tags": next = blockTags(b, y, t); break;
+        case "note": next = blockNote(b, y, t); break;
+        case "quote": next = blockQuote(b, y, t); break;
+        default: next = y;
+      }
+      y = next + 30;
+    });
+    return y;
+  }
+
+  /* ------------------------------------------------------------------ 主绘制 */
+
+  function renderCard() {
+    var t = theme(), rar = rarity(), p = persona(), card = cardByName(state.card);
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.scale(DPR, DPR);
+
+    canvas.setAttribute("aria-label", "麦麦角色卡：" + p.name + " · " + p.title + " · " + rar.name);
+
+    paintBackground(t, rar);
+    paintSurface(t, rar);
+    drawHeader(t, rar, card);
+    drawFooter(t, card);
+
+    var bodyY;
+    if (card.type === "id") {
+      // 角色舞台
+      var haloY = 438;
+      var halo = ctx.createRadialGradient(W / 2, haloY, 20, W / 2, haloY, 256);
+      halo.addColorStop(0, rgba(rar.glow, 0.42));
+      halo.addColorStop(0.62, rgba(rar.color, 0.15));
+      halo.addColorStop(1, rgba(rar.color, 0));
+      ctx.fillStyle = halo;
+      ctx.beginPath(); ctx.arc(W / 2, haloY, 256, 0, Math.PI * 2); ctx.fill();
+
+      ctx.setLineDash([3, 12]);
+      ctx.strokeStyle = rgba(rar.color, 0.42); ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(W / 2, haloY + 10, 226, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.beginPath();
+      ctx.ellipse(W / 2, 722, 180, 26, 0, 0, Math.PI * 2);
+      ctx.fillStyle = rgba(t.ink, 0.07); ctx.fill();
+
+      drawCharacter(W / 2, 720, 0.98, p.look, t);
+
+      // 名字
+      txt(p.name, W / 2, 806, 64, t.ink, 800, "center");
+
+      // 称号 chip
+      var ttl = p.title, tw = measure(ttl, 22, 700) + 78;
+      var tx = W / 2 - tw / 2;
+      fillR(tx, 826, tw, 44, 22, rgba(rar.color, 0.16));
+      strokeR(tx, 826, tw, 44, 22, rgba(rar.color, 0.55), 1.4);
+      txt(p.element, tx + 28, 856, 20, rar.color, 800, "left");
+      txt(ttl, tx + 56, 857, 22, t.ink, 700);
+
+      // slogan
+      spaced(p.slogan, W / 2, 898, 15, t.ink3, 600, 3.2, "center");
+
+      bodyY = 928;
+    } else {
+      // 紧凑身份条
+      drawAvatar(IN + 60, 292, 58, p.look, t);
+      txt(p.name, IN + 140, 280, 40, t.ink, 800);
+      txt(p.title + " · " + p.element + "属性", IN + 140, 318, 21, t.ink2, 500);
+      txt(card.subtitle || "", IN + 140, 348, 17, t.ink3, 400);
+
+      // 右侧战力
+      txt("战力", W - IN - 120, 270, 16, t.ink3, 600, "right");
+      txt(String(Math.round(p.power)), W - IN, 300, 46, rar.color, 800, "right", FN);
+
+      ctx.strokeStyle = t.line; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.moveTo(IN, 372); ctx.lineTo(W - IN, 372); ctx.stroke();
+
+      bodyY = BODY_TOP;
+    }
+
+    var endY = renderBlocks(card.blocks || [], bodyY, t);
+
+    // 溢出保护：内容过高时在控制台给出提示（仅开发期可见）
+    if (endY > H - PAD - 104) {
+      console.warn("卡面内容溢出：" + card.type + " 结束于 " + Math.round(endY));
+    }
+  }
+
+  /* ------------------------------------------------------------------ 导出 */
+
+  function fileName() {
+    var p = persona(), r = rarity();
+    return "mcd-card-" + state.card + "-" + r.key + "-" + (p.cardNo || "demo") + ".png";
+  }
+
+  function download() {
+    canvas.toBlob(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = fileName();
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
+      flash("已保存 ✓");
+    }, "image/png");
+  }
+
+  function copyImage() {
+    if (!navigator.clipboard || !window.ClipboardItem) { flash("请用「保存图片」"); return; }
+    canvas.toBlob(function (blob) {
+      navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]).then(
+        function () { flash("已复制 ✓"); },
+        function () { flash("请用「保存图片」"); }
+      );
+    }, "image/png");
+  }
+
+  var flashTimer = null;
+  function flash(msg) {
+    var btn = document.getElementById("btnSave");
+    var old = btn.textContent;
+    btn.textContent = msg;
+    clearTimeout(flashTimer);
+    flashTimer = setTimeout(function () { btn.textContent = old; }, 1800);
+  }
+
+  /* ------------------------------------------------------------------ 界面装配 */
+
+  function buildUI() {
+    var p = persona();
+    document.getElementById("metaLine").textContent =
+      (DATA.meta.mode === "sample" ? "演示数据" : DATA.meta.mode === "live" ? "实时数据" : "离线数据") +
+      " · " + (p.name || "") + " · " + (p.title || "") +
+      " · " + (p.rarity ? p.rarity.name : "");
+
+    var tabs = document.getElementById("tabs");
+    DATA.cards.forEach(function (c) {
+      var b = document.createElement("button");
+      b.className = "tab" + (c.type === state.card ? " on" : "");
+      b.dataset.type = c.type;
+      b.innerHTML = '<span class="n">' + c.name + '</span><span class="e">' + c.en + '</span>';
+      b.onclick = function () { state.card = c.type; syncUI(); };
+      tabs.appendChild(b);
+    });
+
+    var sw = document.getElementById("swatches");
+    DATA.themes.forEach(function (th) {
+      var b = document.createElement("button");
+      b.className = "sw" + (th.key === theme().key ? " on" : "");
+      b.dataset.key = th.key;
+      b.innerHTML = '<i style="background:linear-gradient(135deg,' + th.bg1 + ',' + th.surface + ' 55%,' + th.accent + ')"></i>' + th.name;
+      b.onclick = function () { state.theme = th.key; syncUI(); };
+      sw.appendChild(b);
+    });
+
+    var sel = document.getElementById("rarityPick");
+    var auto = document.createElement("option");
+    auto.value = "auto"; auto.textContent = "自动（按战力 " + Math.round(p.power) + "）";
+    sel.appendChild(auto);
+    (DATA.ladder || []).forEach(function (tier) {
+      var o = document.createElement("option");
+      o.value = tier.key; o.textContent = tier.name + " · " + tier.tier;
+      sel.appendChild(o);
+    });
+    sel.onchange = function () {
+      state.rarity = sel.value;
+      document.getElementById("previewTag").hidden = state.rarity === "auto";
+      syncUI();
+    };
+
+    var lg = document.getElementById("legend");
+    (DATA.ladder || []).forEach(function (tier) {
+      var d = document.createElement("div");
+      d.innerHTML = '<i style="background:' + tier.color + ';color:' + tier.color + '"></i>' +
+        '<span>' + tier.name + ' · ' + tier.tier + '</span>' +
+        '<span style="margin-left:auto;color:#8a8a92;font-size:11px">战力 ≥ ' + tier.min + '</span>';
+      lg.appendChild(d);
+    });
+
+    document.getElementById("dataNote").textContent =
+      "卡号 " + (p.cardNo || "—") + " · 画像命中「" + (p.title || "—") + "」：" + (p.archetypeReason || "") +
+      " · 主题随画像自动匹配，可手动覆盖。";
+
+    document.getElementById("btnSave").onclick = download;
+    document.getElementById("btnCopy").onclick = copyImage;
+    document.getElementById("btnLoad").onclick = function () { document.getElementById("fileInput").click(); };
+    document.getElementById("fileInput").onchange = function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          DATA = JSON.parse(reader.result);
+          state.card = DATA.defaultCard || "id";
+          state.theme = null;
+          state.rarity = "auto";
+          document.getElementById("tabs").innerHTML = "";
+          document.getElementById("swatches").innerHTML = "";
+          document.getElementById("legend").innerHTML = "";
+          document.getElementById("rarityPick").innerHTML = "";
+          buildUI(); syncUI();
+        } catch (err) { alert("card.json 解析失败：" + err.message); }
+      };
+      reader.readAsText(f);
+    };
+
+    document.addEventListener("keydown", function (e) {
+      var types = DATA.cards.map(function (c) { return c.type; });
+      var i = types.indexOf(state.card);
+      if (e.key === "ArrowRight") state.card = types[(i + 1) % types.length];
+      else if (e.key === "ArrowLeft") state.card = types[(i - 1 + types.length) % types.length];
+      else return;
+      syncUI();
+    });
+
+    // 拖拽载入
+    document.addEventListener("dragover", function (e) { e.preventDefault(); });
+    document.addEventListener("drop", function (e) {
+      e.preventDefault();
+      var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) document.getElementById("fileInput").onchange({ target: { files: [f] } });
+    });
+  }
+
+  function syncUI() {
+    Array.prototype.forEach.call(document.querySelectorAll(".tab"), function (b) {
+      b.classList.toggle("on", b.dataset.type === state.card);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll(".sw"), function (b) {
+      b.classList.toggle("on", b.dataset.key === theme().key);
+    });
+    renderCard();
+  }
+
+  /* 启动 */
+  if (!DATA) {
+    document.getElementById("metaLine").textContent = "未加载数据";
+    txt("请先运行 python scripts/render.py 打包", W / 2, H / 2, 26, "#8a8a92", 500, "center");
+  } else {
+    // 深链参数：?card=stats&theme=midnight&rarity=gold&bare=1
+    try {
+      var qs = new URLSearchParams(location.search);
+      if (qs.get("card")) state.card = qs.get("card");
+      if (qs.get("theme")) state.theme = qs.get("theme");
+      if (qs.get("rarity")) {
+        state.rarity = qs.get("rarity");
+        if (state.rarity !== "auto") document.getElementById("previewTag").hidden = false;
+      }
+      if (qs.has("bare")) document.body.classList.add("bare");
+    } catch (e) { /* 老浏览器忽略 */ }
+
+    if (!state.card || !DATA.cards.some(function (c) { return c.type === state.card; })) {
+      state.card = DATA.defaultCard || "id";
+    }
+    buildUI();
+    renderCard();
+  }
+})();
+</script>
+</body>
+</html>

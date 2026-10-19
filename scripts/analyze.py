@@ -12,6 +12,8 @@ import re
 from collections import Counter, defaultdict
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
+from persona import derive_persona
+
 # ------------------------------------------------------------------ 常量参考值
 
 DAILY_SODIUM_MG = 2000.0       # 《中国居民膳食指南》成人每日钠推荐上限
@@ -250,6 +252,19 @@ def build_report(raw: Dict[str, Dict[str, Any]], mode: str = "live") -> Dict[str
     wallet = _calc_wallet(raw)
     verdicts = _calc_verdicts(overview, trends, items, nutrition_summary, points, wallet)
 
+    partial = {
+        "meta": {"mode": mode},
+        "overview": overview,
+        "trends": trends,
+        "items": items,
+        "nutrition": nutrition_summary,
+        "points": points,
+        "wallet": wallet,
+        "verdicts": verdicts,
+    }
+    # 角色画像：由同一份指标推导，保证报告与角色卡永远说的是同一套数据
+    persona = derive_persona(partial)
+
     return {
         "meta": {
             "generatedAt": dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -264,6 +279,7 @@ def build_report(raw: Dict[str, Dict[str, Any]], mode: str = "live") -> Dict[str
         "points": points,
         "wallet": wallet,
         "verdicts": verdicts,
+        "persona": persona,
     }
 
 

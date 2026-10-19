@@ -1,12 +1,15 @@
 # 本地生成物，不进仓库
 *.raw.json
 report.json
+card.json
+build/
 .env
 __pycache__/
 *.py[cod]
 
-# 例外：随仓库提交的演示版报告（内嵌演示数据，无任何真实信息）
+# 例外：随仓库提交的演示版页面（内嵌演示数据，无任何真实信息）
 !preview.html
+!card.html
 
 # 任何形式的密钥/Token 一律拦住，宁可误报也不放过
 *.token

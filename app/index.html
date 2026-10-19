@@ -112,6 +112,31 @@
   .empty{padding:36px 10px;text-align:center;color:var(--ink-3);font-size:14px}
   .empty code{background:#f2f2f5;padding:2px 6px;border-radius:5px;font-size:12px}
 
+  /* ---------- 角色卡入口 ---------- */
+  .persona{
+    display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;
+    background:linear-gradient(120deg,#ffffff,#fffdf4);
+    border:1px solid var(--line);border-left:5px solid var(--brand);
+    border-radius:12px;padding:18px 22px;margin-top:20px;
+    box-shadow:0 1px 2px rgba(16,16,20,.04);
+  }
+  .persona .who{flex:1;min-width:240px}
+  .persona .rarity{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.6px;
+    padding:3px 10px;border-radius:20px;margin-bottom:8px;
+  }
+  .persona h2{margin:0 0 5px;font-size:21px;letter-spacing:.3px}
+  .persona h2 span{font-size:13px;font-weight:500;color:var(--ink-3);margin-left:8px}
+  .persona p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+  .persona .score{text-align:center;padding:0 6px}
+  .persona .score b{display:block;font-size:34px;line-height:1.1;font-variant-numeric:tabular-nums}
+  .persona .score i{font-size:11px;color:var(--ink-3);font-style:normal;letter-spacing:1px}
+  .persona .go{
+    background:#17171a;color:#fff;border-radius:9px;padding:10px 16px;
+    font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;
+  }
+  .persona .go:hover{background:#2d2d33}
+
   footer{margin-top:28px;font-size:12px;color:var(--ink-3);line-height:1.8;border-top:1px solid var(--line);padding-top:16px}
   .share{background:#fafafa;border:1px dashed #d5d5da;border-radius:10px;padding:16px;white-space:pre-wrap;font-size:13px;color:var(--ink-2);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
   .dropping{outline:2px dashed var(--brand);outline-offset:6px}
@@ -128,6 +153,7 @@
     </div>
     <div class="grow"></div>
     <button class="btn" id="btnDemo">看演示</button>
+    <a class="btn" href="card.html" style="text-decoration:none">角色卡</a>
     <button class="btn" id="btnLoad">载入 report.json</button>
     <button class="btn primary" id="btnCopy">复制文字版</button>
     <input type="file" id="fileInput" accept=".json,application/json" hidden>
@@ -290,6 +316,23 @@ window.__CHECKUP_SAMPLE__ = /*__CHECKUP_SAMPLE__*/null;
       return '<div class="kpi"><div class="k">' + esc(x.k) + '</div><div class="v">' + esc(x.v) +
         '<span class="u">' + esc(x.u) + '</span></div><div class="n">' + esc(x.n) + "</div></div>";
     }).join("") + "</div>";
+
+    /* 角色卡入口 */
+    if (data.persona) {
+      var pe = data.persona, rr = pe.rarity || {};
+      var rc = rr.color || "#c8c8c8";
+      html += '<div class="persona" style="border-left-color:' + esc(rc) + '">' +
+        '<div class="who">' +
+        '<span class="rarity" style="background:' + esc(rc) + '22;color:' + esc(rc) + '">' +
+        esc(rr.name || "—") + " · " + esc(rr.tier || "") + "</span>" +
+        "<h2>" + esc(pe.name) + '<span>' + esc(pe.title) + " · " + esc(pe.element) + "属性</span></h2>" +
+        "<p>" + esc(pe.quote) + "</p>" +
+        "</div>" +
+        '<div class="score"><b style="color:' + esc(rc) + '">' + esc(Math.round(pe.power)) +
+        "</b><i>战力</i></div>" +
+        '<a class="go" href="card.html">查看角色卡 →</a>' +
+        "</div>";
+    }
 
     if (!o.orderCount) {
       html += '<div class="card empty">当前账号暂无历史订单。<br>' +
