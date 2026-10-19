@@ -227,7 +227,14 @@ def build_card(report: Dict[str, Any], persona: Dict[str, Any] = None) -> Dict[s
     """组装完整的卡片数据包（5 张卡面 + 5 套主题 + 稀有度阶梯）。"""
     from persona import RARITY_LADDER
 
-    p = persona or report.get("persona") or derive_persona(report)
+    base = persona or report.get("persona") or derive_persona(report)
+    p = dict(base)
+
+    # 立绘：每种原型一张，构建时只解析当前账号命中的那张
+    rel = "assets/characters/%s.png" % (p.get("archetype") or "")
+    if p.get("archetype") and os.path.exists(os.path.join(ROOT, rel)):
+        p["portrait"] = rel
+
     cards = []
     for builder in CARD_BUILDERS:
         cards.append(builder(report, p))

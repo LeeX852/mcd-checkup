@@ -840,6 +840,46 @@ window.__CARD_DATA__ = /*__CARD_DATA__*/null;
     ctx.strokeStyle = rgba(t.ink, 0.14); ctx.lineWidth = 3; ctx.stroke();
   }
 
+  /* ------------------------------------------------------------------ 立绘 */
+
+  var portraitImg = null, portraitSrc = "";
+
+  /* 构建期把当前画像的立绘内联为 data URI；没有则退回程序化角色 */
+  function portraitReady() {
+    var src = persona().portrait || "";
+    if (!src) return false;
+    if (portraitSrc !== src) {
+      portraitSrc = src;
+      portraitImg = new Image();
+      portraitImg.onload = function () { renderCard(); };
+      portraitImg.src = src;
+      return false;
+    }
+    return !!(portraitImg && portraitImg.complete && portraitImg.naturalWidth > 0);
+  }
+
+  /* 圆形取景：把立绘按 cover 方式填满圆，边界全部藏在圆外（也顺带裁掉右下角水印） */
+  function drawPortraitCircle(cx, cy, r, zoom, offsetY, look, t) {
+    ctx.save();
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.clip();
+    if (portraitImg && portraitImg.naturalWidth) {
+      var s = Math.max((r * 2) / portraitImg.naturalWidth, (r * 2) / portraitImg.naturalHeight) * zoom;
+      var w = portraitImg.naturalWidth * s, h = portraitImg.naturalHeight * s;
+      ctx.fillStyle = "#FDF1DC";
+      ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+      ctx.drawImage(portraitImg, cx - w / 2, cy - h / 2 + (offsetY || 0) * h, w, h);
+    } else {
+      var bg = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+      bg.addColorStop(0, rgba(t.accent, 0.20));
+      bg.addColorStop(1, rgba(t.accent2, 0.28));
+      ctx.fillStyle = bg; ctx.fillRect(cx - r, cy - r, r * 2, r * 2);
+      var sc = r >= 150 ? r / 300 : r / 132;
+      var off = r >= 150 ? 17 : 0;
+      drawCharacter(cx, cy + 352 * sc - off, sc, look, t);
+    }
+    ctx.restore();
+  }
+
   /* ------------------------------------------------------------------ 页眉 / 页脚 */
 
   function drawHeader(t, rar, card) {
@@ -1171,6 +1211,9 @@ window.__CARD_DATA__ = /*__CARD_DATA__*/null;
   function renderCard() {
     var t = theme(), rar = rarity(), p = persona(), card = cardByName(state.card);
 
+    // 首次渲染触发立绘加载，onload 后再重绘一次（失败则一直用程序化角色）
+    portraitReady();
+
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.scale(DPR, DPR);
@@ -1184,44 +1227,73 @@ window.__CARD_DATA__ = /*__CARD_DATA__*/null;
 
     var bodyY;
     if (card.type === "id") {
-      // 角色舞台
-      var haloY = 438;
-      var halo = ctx.createRadialGradient(W / 2, haloY, 20, W / 2, haloY, 256);
-      halo.addColorStop(0, rgba(rar.glow, 0.42));
-      halo.addColorStop(0.62, rgba(rar.color, 0.15));
+      var pR = 232, pCx = W / 2, pCy = 434;
+
+      // 品质环境光
+      var halo = ctx.createRadialGradient(pCx, pCy, pR * 0.5, pCx, pCy, pR * 1.72);
+      halo.addColorStop(0, rgba(rar.glow, 0.34));
+      halo.addColorStop(0.66, rgba(rar.color, 0.13));
       halo.addColorStop(1, rgba(rar.color, 0));
       ctx.fillStyle = halo;
-      ctx.beginPath(); ctx.arc(W / 2, haloY, 256, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(pCx, pCy, pR * 1.72, 0, Math.PI * 2); ctx.fill();
 
-      ctx.setLineDash([3, 12]);
-      ctx.strokeStyle = rgba(rar.color, 0.42); ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.arc(W / 2, haloY + 10, 226, 0, Math.PI * 2); ctx.stroke();
-      ctx.setLineDash([]);
+      // 外圈光边
+      ctx.save();
+      ctx.shadowColor = rgba(rar.color, 0.8);
+      ctx.shadowBlur = 32 + rar.stars * 8;
+      ctx.strokeStyle = rgba(rar.glow, 0.9);
+      ctx.lineWidth = 5;
+      ctx.beginPath(); ctx.arc(pCx, pCy, pR + 8, 0, Math.PI * 2); ctx.stroke();
+      ctx.restore();
 
-      ctx.beginPath();
-      ctx.ellipse(W / 2, 722, 180, 26, 0, 0, Math.PI * 2);
-      ctx.fillStyle = rgba(t.ink, 0.07); ctx.fill();
+      // 立绘（无素材时自动退回程序化角色）
+      drawPortraitCircle(pCx, pCy, pR, 1.25, -0.01, p.look, t);
 
-      drawCharacter(W / 2, 720, 0.98, p.look, t);
+      // 内缘压暗，让圆窗有厚度
+      var vg = ctx.createRadialGradient(pCx, pCy, pR * 0.70, pCx, pCy, pR);
+      vg.addColorStop(0, "rgba(0,0,0,0)");
+      vg.addColorStop(1, "rgba(0,0,0,0.16)");
+      ctx.save();
+      ctx.beginPath(); ctx.arc(pCx, pCy, pR, 0, Math.PI * 2); ctx.clip();
+      ctx.fillStyle = vg; ctx.fillRect(pCx - pR, pCy - pR, pR * 2, pR * 2);
+      ctx.restore();
+
+      // 双环
+      ctx.strokeStyle = rgba(rar.color, 0.85); ctx.lineWidth = 2.6;
+      ctx.beginPath(); ctx.arc(pCx, pCy, pR + 17, 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = rgba(t.ink, 0.10); ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.arc(pCx, pCy, pR + 2, 0, Math.PI * 2); ctx.stroke();
+
+      // 战力徽章（压在光环右下）
+      var bx = pCx + pR * 0.70, by = pCy + pR * 0.70;
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.28)"; ctx.shadowBlur = 20; ctx.shadowOffsetY = 6;
+      ctx.beginPath(); ctx.arc(bx, by, 46, 0, Math.PI * 2);
+      ctx.fillStyle = t.surface; ctx.fill();
+      ctx.restore();
+      ctx.beginPath(); ctx.arc(bx, by, 46, 0, Math.PI * 2);
+      ctx.strokeStyle = rgba(rar.color, 0.9); ctx.lineWidth = 3; ctx.stroke();
+      txt(String(Math.round(p.power)), bx, by + 2, 30, rar.color, 800, "center", FN);
+      txt("战力", bx, by + 26, 12, t.ink3, 600, "center");
 
       // 名字
-      txt(p.name, W / 2, 806, 64, t.ink, 800, "center");
+      txt(p.name, W / 2, 756, 64, t.ink, 800, "center");
 
       // 称号 chip
       var ttl = p.title, tw = measure(ttl, 22, 700) + 78;
       var tx = W / 2 - tw / 2;
-      fillR(tx, 826, tw, 44, 22, rgba(rar.color, 0.16));
-      strokeR(tx, 826, tw, 44, 22, rgba(rar.color, 0.55), 1.4);
-      txt(p.element, tx + 28, 856, 20, rar.color, 800, "left");
-      txt(ttl, tx + 56, 857, 22, t.ink, 700);
+      fillR(tx, 778, tw, 44, 22, rgba(rar.color, 0.16));
+      strokeR(tx, 778, tw, 44, 22, rgba(rar.color, 0.55), 1.4);
+      txt(p.element, tx + 28, 808, 20, rar.color, 800, "left");
+      txt(ttl, tx + 56, 809, 22, t.ink, 700);
 
       // slogan
-      spaced(p.slogan, W / 2, 898, 15, t.ink3, 600, 3.2, "center");
+      spaced(p.slogan, W / 2, 854, 15, t.ink3, 600, 3.2, "center");
 
-      bodyY = 928;
+      bodyY = 886;
     } else {
       // 紧凑身份条
-      drawAvatar(IN + 60, 292, 58, p.look, t);
+      drawPortraitCircle(IN + 60, 292, 58, 1.85, -0.03, p.look, t);
       txt(p.name, IN + 140, 280, 40, t.ink, 800);
       txt(p.title + " · " + p.element + "属性", IN + 140, 318, 21, t.ink2, 500);
       txt(card.subtitle || "", IN + 140, 348, 17, t.ink3, 400);

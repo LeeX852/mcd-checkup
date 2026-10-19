@@ -13,6 +13,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import sys
@@ -56,6 +57,21 @@ def build_card_html(card_obj, template_path=CARD_TEMPLATE) -> str:
     return html.replace(CARD_TOKEN, "/*__CARD_DATA__*/" + safe_json(card_obj), 1)
 
 
+def inline_portrait(payload):
+    """把当前画像对应的立绘以 data URI 内联，保证产物仍是单文件、可离线打开。"""
+    p = payload.get("persona") or {}
+    rel = p.get("portrait")
+    if not rel or str(rel).startswith("data:"):
+        return payload
+    path = os.path.join(ROOT, rel)
+    if not os.path.exists(path):
+        p.pop("portrait", None)
+        return payload
+    with open(path, "rb") as fh:
+        p["portrait"] = "data:image/png;base64," + base64.b64encode(fh.read()).decode("ascii")
+    return payload
+
+
 def _write(path: str, content: str, label: str) -> None:
     out_dir = os.path.dirname(os.path.abspath(path))
     os.makedirs(out_dir, exist_ok=True)
@@ -88,7 +104,8 @@ def main(argv=None) -> int:
     _write(args.out, build(data_obj, sample_obj), "报告")
 
     if not args.no_card:
-        _write(args.card_out, build_card_html(build_card(data_obj)), "角色卡")
+        payload = inline_portrait(build_card(data_obj))
+        _write(args.card_out, build_card_html(payload), "角色卡")
     return 0
 
 

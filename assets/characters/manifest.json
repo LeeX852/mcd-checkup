@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "style": "chibi bust portrait, flat cel shading, cream background",
+  "source": "WorkBuddy ImageGen（2026-10-19）",
+  "size": "768x768 PNG",
+  "note": "每种原型一张立绘，构建时只内联当前账号命中的那一张；不使用官方吉祥物或商标图形。",
+  "characters": {
+    "night_keeper": {
+      "file": "night_keeper.png",
+      "desc": "深夜守夜人 · 耳机 / 睡衣感连帽衫"
+    },
+    "loyalist": {
+      "file": "loyalist.png",
+      "desc": "本命信徒 · 红帽 / 红连帽衫"
+    },
+    "sleepy_rich": {
+      "file": "sleepy_rich.png",
+      "desc": "沉睡财主 · 圆眼镜 / 芥末黄卫衣"
+    },
+    "explorer": {
+      "file": "explorer.png",
+      "desc": "探店猎人 · 青绿马尾 / 黄围巾"
+    },
+    "value_hunter": {
+      "file": "value_hunter.png",
+      "desc": "精算猎人 · 方眼镜 / 青绿衬衫"
+    },
+    "kcal_warrior": {
+      "file": "kcal_warrior.png",
+      "desc": "热量战士 · 炸毛短发 / 橙红外套"
+    },
+    "steady": {
+      "file": "steady.png",
+      "desc": "日常打卡人 · 侧分短发 / 棕色开衫"
+    },
+    "rookie": {
+      "file": "rookie.png",
+      "desc": "麦麦新客 · 红丝带 / 红连帽衫"
+    }
+  }
+}
